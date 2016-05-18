@@ -11,23 +11,27 @@ import sys
 def main(argv):
 	print("Loading file: %s" % str(argv))
 	dataset=pd.read_csv(argv,sep='\t')
-	print(dataset.columns)
-	print("Loading finished")
-	print(dataset["Category"])
-	wordcloud = WordCloud(max_font_size=40, relative_scaling=.5)
+	print("Loading finished.")
+	img_w=960
+	img_h=540
+	relative_sc=1
+	wordcloud = WordCloud(width=img_w, height=img_h, relative_scaling=relative_sc)
+	print("Creating categories' list.")
 	list_categories ={}
 	for index, row in dataset.iterrows():
 		try:
 			list_categories[row['Category']] += row['Content']
 		except KeyError:
 		   	list_categories[row['Category']] = row['Content']
+	print("Categories created.")
+	print("Creating word clouds.")
 	for category, words in list_categories.iteritems():
 		wordcloud.generate(words)
 		image = wordcloud.to_image()
-		image.save("Wordcloud_" + category + ".png")
+		image.save("data/Wordcloud_" + category + "_" + str(img_w) + "x" + str(img_h) + ".png")
 		image.show()
 	return
 
 print"Program starts..."
 main(sys.argv[1])
-print"Finished"
+print"Finished."
