@@ -29,6 +29,7 @@ from sklearn.neighbors import NearestCentroid
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.utils.extmath import density
 from sklearn import metrics
+import pandas as pd
 
 
 # Display progress logs on stdout
@@ -81,10 +82,11 @@ if opts.all_categories:
     categories = None
 else:
     categories = [
-        'alt.atheism',
-        'talk.religion.misc',
-        'comp.graphics',
-        'sci.space',
+        'Politics',
+        'Film',
+        'Football',
+        'Business',
+        'Technology',
     ]
 
 if opts.filtered:
@@ -95,13 +97,9 @@ else:
 print("Loading 20 newsgroups dataset for categories:")
 print(categories if categories else "all")
 
-data_train = fetch_20newsgroups(subset='train', categories=categories,
-                                shuffle=True, random_state=42,
-                                remove=remove)
+data_train = pd.read_csv("train_set.csv",sep='\t')
 
-data_test = fetch_20newsgroups(subset='test', categories=categories,
-                               shuffle=True, random_state=42,
-                               remove=remove)
+data_test = pd.read_csv("train_set.csv",sep='\t')
 print('data loaded')
 
 categories = data_train.target_names    # for case categories == None
