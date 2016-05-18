@@ -5,7 +5,7 @@ Generating a square wordcloud from the given dataset.
 
 import pandas as pd
 from os import path
-#from wordcloud import WordCloud
+from wordcloud import WordCloud
 import sys
 
 def main(argv):
