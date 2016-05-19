@@ -31,8 +31,39 @@ from sklearn.utils.extmath import density
 from sklearn import metrics
 import pandas as pd
 
+def data_classifier(classifier_name,classifier):
+  print("Training: ")
+  print(classifier)
+
+  if(name == "Multinomial Naive Bayes" or name == "Binomial Naive Bayes"):
+    pipeline = Pipeline([
+      ('vect', vectorizer),
+      ('tfidf', transformer),
+      ('clf', classifier)
+    ])
+  else:
+    pipeline = Pipeline([
+      ('vect', vectorizer),
+      ('tfidf', transformer),
+      ('svd',svd),
+      ('clf', classifier)
+    ])
+
+  tuned_parameters={'svd__n_components':[50],'tfidf__use_idf':(True,False)}
+  clf = GridSearchCV(pipeline, {}, cv=10,n_jobs=-1)
+  clf.fit(X_train,Y_train_true)
+  print("Best parameters set found on development set:")
+  print
+  print(clf.best_params_)
+  print
+  predicted=clf.predict(X_test)
+  #print(metrics.classification_report(df['Category'], le.inverse_transform(predicted)))
+  print(metrics.classification_report(Y_test_true,predicted,target_names=le.classes_))
+
+
 print"Program starts..."
-df=pd.read_csv("train_set.csv",sep="\t")
+file_name=str(sys.argv[1])
+df=pd.read_csv(file_name,sep="\t")
 X=df[['Title','Content']]
 X_init=df[['Title','Content','Category']]
 le=preprocessing.LabelEncoder()

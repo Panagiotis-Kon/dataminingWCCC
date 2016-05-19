@@ -8,9 +8,9 @@ from os import path
 from wordcloud import WordCloud
 import sys
 
-def wordcloud_generator(argv):
-	print("Loading file: %s" % str(argv))
-	dataset=pd.read_csv(argv,sep='\t')
+def wordcloud_generator(file_name):
+	print("Loading file: %s" % str(file_name))
+	dataset=pd.read_csv(file_name,sep='\t')
 	print("Loading finished.")
 	img_w=960
 	img_h=540
