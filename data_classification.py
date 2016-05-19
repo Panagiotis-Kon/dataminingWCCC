@@ -35,7 +35,7 @@ def data_classifier(classifier_name,classifier):
   print("Training: ")
   print(classifier)
 
-  if(name == "Multinomial Naive Bayes" or name == "Binomial Naive Bayes"):
+  if(classifier_name == "Multinomial Naive Bayes" or classifier_name == "Binomial Naive Bayes"):
     pipeline = Pipeline([
       ('vect', vectorizer),
       ('tfidf', transformer),
