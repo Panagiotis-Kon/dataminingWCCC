@@ -8,10 +8,14 @@ from os import path
 from wordcloud import WordCloud
 import sys
 
-def wordcloud_generator(file_name):
+def import_from_csv(file_name):
 	print("Loading file: %s" % str(file_name))
-	dataset=pd.read_csv(file_name,sep='\t')
+	dataset=pd.read_csv(file_name, sep='\t')
 	print("Loading finished.")
+	return dataset
+
+def wordcloud_generator(file_name):
+	dataset=import_from_csv(file_name)
 	img_w=960
 	img_h=540
 	relative_sc=1
@@ -32,7 +36,7 @@ def wordcloud_generator(file_name):
 		image = wordcloud.to_image()
 		image.save("data/Wordcloud_" + category + "_" + str(img_w) + "x" + str(img_h) + ".png")
 		image.show()
-	print("Word Clouds finished.")
+	print("WordClouds' creation finished.")
 	return
 
 print"Program starts..."
