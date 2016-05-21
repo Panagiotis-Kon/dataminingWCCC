@@ -14,8 +14,7 @@ def import_from_csv(file_name):
 	print("Loading finished.")
 	return dataset
 
-def wordcloud_generator(file_name):
-	dataset=import_from_csv(file_name)
+def wordcloud_generator(dataset):
 	img_w=960
 	img_h=540
 	relative_sc=1
@@ -40,5 +39,6 @@ def wordcloud_generator(file_name):
 	return
 
 print"Program starts..."
-wordcloud_generator(sys.argv[1])
+dataset=import_from_csv(sys.argv[1])
+wordcloud_generator(dataset)
 print"Program ends..."
