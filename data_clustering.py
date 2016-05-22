@@ -10,8 +10,7 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 from scipy.spatial.distance import cosine
-from data_csv_functions import import_from_csv
-from data_csv_functions import export_to_csv
+import data_csv_functions as dcvs
 
 def init_vector(data):
 	print"Vectorization of data initializes."
@@ -45,42 +44,53 @@ def has_converged(mu, oldmu):
 
 def find_centers(X, K):
 	# Initialize to K random centers
-	print"K-means' clusterization begins."
+	print"K-means' clustering begins."
+	sys.stdout.write("Processing: ")
 	oldmu = random.sample(X, K)
 	mu = random.sample(X, K)
 	while not has_converged(mu, oldmu):
+		# update the bar
+		sys.stdout.write("#")
+		sys.stdout.flush()
 		oldmu = mu
 		# Assign all points in X to clusters
 		clusters = cluster_points(X, mu)
 		# Reevaluate centers
 		mu = reevaluate_centers(oldmu, clusters)
-	print"K-means' clusterization finished."
+	print
+	print"K-means' clustering finished."
 	return (mu, clusters)
 
-def generate_results(clusters, x_train, df):
+def generate_formated_results(dataset,X_train,clusters):
 	print"Genarating results."
-	ordered_list_with_category = df['Category'].tolist()
+	sys.stdout.write("Processing: ")
+	category_list = dataset['Category'].tolist()
 	results = {}
 	for cluster, vectors in clusters.iteritems():
+		# update the bar
+		sys.stdout.write("#")
+		sys.stdout.flush()
 		total = 0
-		cluster_name = "Cluster " + str(cluster + 1)
-		results[cluster_name] = {}
+		cluster_index = "Cluster" + str(cluster + 1)
+		formated_results[cluster_index] = {}
 		for vector in vectors:
 			total += 1
-			category = ordered_list_with_category[np.where(x_train == vector)[0][0]]
+			category = category_list[np.where(X_train == vector)[0][0]]
 			try:
-				results[cluster_name][category] += 1
+				formated_results[cluster_index][category] += 1
 			except KeyError:
-				results[cluster_name][category] = 1
-		for category in results[cluster_name]:
-			 results[cluster_name][category] = round(results[cluster_name][category] / float(total), 2)
+				formated_results[cluster_index][category] = 1
+		for category in formated_results[cluster_index]:
+			#formated_results[cluster_index][category] = round(results[cluster_index][category] / float(total), 2)
+			formated_results[cluster_index][category] = results[cluster_index][category] / float(total)
+	print
 	print"Genarating results finished."
-	return results
+	return formated_results
 
 print"Program starts..."
-dataset=import_from_csv(sys.argv[1])
+dataset=dcvs.import_from_csv(sys.argv[1])
 X_train=init_vector(dataset)
 centers, clusters = find_centers(X_train,5) # In this example K=5
-results=generate_results(clusters, X_train, dataset)
-export_to_csv('./data/clustering_KMeans.csv',results)
+results=generate_results(dataset, X_train, clusters)
+dcvs.export_to_csv('./data/clustering_KMeans.csv',results)
 print"Program ends..."

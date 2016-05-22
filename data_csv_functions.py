@@ -10,6 +10,6 @@ def import_from_csv(file_name):
 def export_to_csv(file_name,data):
 	print("Exporting to file: %s" % str(file_name))
 	dataset = pd.DataFrame.from_dict(data, orient='index')
-	dataset.to_csv(file_name, sep='\t', na_rep='0.0')
+	dataset.to_csv(file_name, sep='\t', na_rep='0.00', encoding='utf-8')
 	print("Exporting finished.")
 	return
