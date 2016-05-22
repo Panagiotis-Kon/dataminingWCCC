@@ -65,7 +65,7 @@ def generate_formated_results(dataset,X_train,clusters):
 	print"Genarating results."
 	sys.stdout.write("Processing: ")
 	category_list = dataset['Category'].tolist()
-	results = {}
+	formated_results = {}
 	for cluster, vectors in clusters.iteritems():
 		# update the bar
 		sys.stdout.write("#")
@@ -81,8 +81,8 @@ def generate_formated_results(dataset,X_train,clusters):
 			except KeyError:
 				formated_results[cluster_index][category] = 1
 		for category in formated_results[cluster_index]:
-			#formated_results[cluster_index][category] = round(results[cluster_index][category] / float(total), 2)
-			formated_results[cluster_index][category] = results[cluster_index][category] / float(total)
+			formated_results[cluster_index][category] = round(formated_results[cluster_index][category] / float(total), 2)
+			#formated_results[cluster_index][category] = formated_results[cluster_index][category] / float(total)
 	print
 	print"Genarating results finished."
 	return formated_results
@@ -91,6 +91,6 @@ print"Program starts..."
 dataset=dcvs.import_from_csv(sys.argv[1])
 X_train=init_vector(dataset)
 centers, clusters = find_centers(X_train,5) # In this example K=5
-results=generate_results(dataset, X_train, clusters)
+results=generate_formated_results(dataset, X_train, clusters)
 dcvs.export_to_csv('./data/clustering_KMeans.csv',results)
 print"Program ends..."
