@@ -1,0 +1,291 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"k",
+				"k_neighbors_num"
+			],
+			[
+				"na",
+				"naive_bayes_a"
+			],
+			[
+				"nai",
+				"naive_bayes_a"
+			],
+			[
+				"test",
+				"test_size"
+			],
+			[
+				"if",
+				"if	If Condition"
+			],
+			[
+				"clu",
+				"clusters"
+			],
+			[
+				"im",
+				"import_from_csv"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "data_classification_v3.py",
+			"settings":
+			{
+				"buffer_size": 7633,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/USER/git/dataminingWCCC/data_csv_functions.py",
+		"/C/Users/USER/git/dataminingWCCC/data/clustering_KMeans.csv",
+		"/C/Users/USER/git/dataminingWCCC/data_wordcloud.py",
+		"/C/Users/USER/git/dataminingWCCC/data_clustering.py",
+		"/C/Users/USER/git/dataminingWCCC/data/1/EvaluationMetric_10fold_25.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/testSet_categories.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/1/EvaluationMetric_10fold_30.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/EvaluationMetric_10fold.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/1/testSet_categories_25.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/1/testSet_categories_30.csv",
+		"/F/Dropbox/TeamProjects/1η εργασία 2015-16/libs/install_python2.sh",
+		"/C/Users/USER/git/dataminingWCCC/data/EvaluationMetric_10fold",
+		"/C/Users/USER/git/dataminingWCCC/data/train_set.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/test_set.csv",
+		"/C/Users/USER/git/dataminingWCCC/data/clustering_KMeans_old.csv",
+		"/F/Dropbox/TeamProjects/1η εργασία 2015-16/libs/install.txt",
+		"/C/Users/USER/git/dataminingWCCC/data_classification_v2.py",
+		"/C/Users/USER/git/dataminingWCCC/data_classification.py",
+		"/C/Users/USER/Desktop/probably.py",
+		"/C/Users/USER/Desktop/probably (1).py",
+		"/C/Users/USER/Desktop/please_dog_no.py",
+		"/C/Users/USER/git/dataminingWCCC/data/clustering_KMeans_new.csv",
+		"/C/Users/USER/git/dataminingWCCC/examples/mindy_project.py",
+		"/C/Users/USER/git/dataminingWCCC/examples/read_files.py",
+		"/C/Users/USER/git/dataminingWCCC/data/clustering_KMeans_ol.csv",
+		"/C/Users/USER/git/dataminingWCCC/examples/progressbar.py",
+		"/C/Users/USER/Desktop/okeanos.txt",
+		"/C/Users/USER/Desktop/contacts.vcf",
+		"/C/Users/USER/git/dataminingCWCC/data_csv_functions.py",
+		"/C/Users/USER/git/dataminingCWCC/data_clustering.py",
+		"/C/Users/USER/git/dataminingCWCC/clustering_V2.1.py",
+		"/C/Users/USER/git/dataminingCWCC/clustering_KMeans.csv",
+		"/C/Users/USER/git/dataminingCWCC/data/clustering_KMeans.csv",
+		"/C/Users/USER/git/dataminingCWCC/data/train_set.csv",
+		"/C/Users/USER/git/dataminingCWCC/data_wordcloud.py",
+		"/C/Users/USER/git/dataminingCWCC/examples/clustering_V2.1.py",
+		"/C/Users/USER/Downloads/clustering_V2.1.py",
+		"/C/Users/USER/Downloads/data_classification.py",
+		"/C/Users/USER/git/dataminingCWCC/examples/panos.py",
+		"/C/Users/USER/git/dataminingCWCC/examples/pipeline_example.py",
+		"/C/Users/USER/git/dataminingCWCC/examples/classification_example.py",
+		"/C/Users/USER/git/dataminingCWCC/data_classification.py",
+		"/C/Users/USER/Desktop/Programs/Putty/putty_tree.xml",
+		"/C/Users/USER/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/USER/git/dataminingCWCC/examples/wordclouding_V3.py",
+		"/C/Users/USER/git/dataminingCWCC/clustering.py",
+		"/C/Users/USER/Desktop/DIT/Mathhmata/10ο Εξάμηνο/Τεχνικές Εξόρυξης Δεδομένων (ΥΣ11)/Εργασίες/1η εργασία 2015-16/word_cloud-master/examples/masked.py",
+		"/C/Users/USER/Desktop/wordclouding_V3.py",
+		"/C/Users/USER/git/dataminingCWCC/simple.py",
+		"/C/Users/USER/git/dataminingCWCC/read_files.py",
+		"/C/Users/USER/git/dataminingCWCC/pipeline_example.py",
+		"/C/Users/USER/git/dataminingCWCC/classification.py",
+		"/C/Users/USER/git/dataminingCWCC/classification_example.py",
+		"/C/Users/USER/Desktop/DIT/Mathhmata/10ο Εξάμηνο/Τεχνικές Εξόρυξης Δεδομένων (ΥΣ11)/Εργασίες/1η εργασία 2015-16/word_cloud-master/examples/simple.py",
+		"/C/Users/USER/git/dataminingCWCC/wordcloud_v1.py",
+		"/C/Users/USER/git/dataminingCWCC/wordcloud.py",
+		"/C/Users/USER/Desktop/DIT/Mathhmata/10ο Εξάμηνο/Τεχνικές Εξόρυξης Δεδομένων (ΥΣ11)/Εργασίες/1η εργασία 2015-16/word_cloud-master/doc/conf.py",
+		"/F/Dropbox/DIT-SCAN LAB/Manure Shop/insert.sql",
+		"/F/Dropbox/DIT-SCAN LAB/Manure Shop/m-shop-database.sql"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"test",
+			"export"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "data_classification_v3.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7633,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7504,
+								7504
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1200.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
