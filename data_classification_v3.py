@@ -59,7 +59,7 @@ def classification(clfname,classifier):
 			('clf', classifier)
 		])
 
-	grid_search = GridSearchCV(pipeline, {}, cv=10,n_jobs=-1)
+	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
 	grid_search.fit(X_train,y_train)
 	print
 	print('*' * 60)
@@ -122,7 +122,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 		('clf', classifier)
 	])
 	print("Gridsearch...")
-	grid_search = GridSearchCV(pipeline, {}, cv=10,n_jobs=-1)
+	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
 	print("Fitting...")
 	grid_search.fit(X_train,y_train)
 	print
@@ -138,7 +138,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 	return accuracy,y_proba,y_test
 
 def predict_category(X,y,file_name):
-	print("Predict the category with k-Nearest Neighbor Classifier...")
+	print("Predict the category with (Multinomial)-Naive Bayes Classifier...")
 	X_train = X
 	Y_train = y
 
@@ -147,14 +147,12 @@ def predict_category(X,y,file_name):
 
 	vectorizer=CountVectorizer(stop_words='english')
 	transformer=TfidfTransformer()
-	svd=TruncatedSVD(n_components=10, random_state=42)
-	clf=KNeighborsClassifier(k_neighbors_num,n_jobs=-1)
+	clf=MultinomialNB(alpha=naive_bayes_a)
 
 
 	pipeline = Pipeline([
 		('vect', vectorizer),
 		('tfidf', transformer),
-		('svd',svd),
 		('clf', clf)
 	])
 	#Simple Pipeline Fit
@@ -176,7 +174,6 @@ def predict_category(X,y,file_name):
 	out_dic.update(id_dic)
 	out_dic.update(category_dic)
 	# Append the result to the csv
-	df_out = pd.DataFrame(out_dic)
 	print("Exporting predicted category to csv")
 	dcsv.export_to_csv_categories("./data/testSet_categories.csv",out_dic)
 

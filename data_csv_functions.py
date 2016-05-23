@@ -13,7 +13,7 @@ def import_from_csv(file_name):
 def export_to_csv_categories(file_name,data):
 	print('=' * 60)
 	print("Exporting to file: %s" % str(file_name))
-	dataset = pd.DataFrame.from_dict(data, orient='index')
+	dataset = pd.DataFrame(data)
 	dataset.to_csv(file_name, sep='\t')
 	print("Exporting finished.")
 	print('=' * 60)
