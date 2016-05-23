@@ -76,7 +76,7 @@ def roc_curve_estimator(y_test,y_proba,clfname,color):
     fpr, tpr, thresholds = roc_curve(y_binary[:,1],y_proba[:,1])
     roc_auc = metrics.auc(fpr, tpr)
     print ("Area under the ROC curve: %f" % roc_auc)
-    plt.plot(fpr, tpr, 'k', label="%s ,Mean ROC (area = %0.3f)" % (clfname,roc_auc), lw=2, c="%s" % color)
+    plt.plot(fpr, tpr, 'k', label="%s , (area = %0.3f)" % (clfname,roc_auc), lw=2, c="%s" % color)
 
 
     return roc_auc
@@ -126,7 +126,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 	print("Fitting...")
 	grid_search.fit(X_train,y_train)
 	print
-	#print("Best params: " % grid_search.best_params_)
+	
 	print('*' * 60)
 	predicted=grid_search.predict(X_test)
 	print("End of prediction")
@@ -214,7 +214,7 @@ if __name__ == "__main__":
 	print("Classification")
 
 
-#(SVC(kernel='linear', C=1.0), "MyMethod", "m")
+
 	classifiers_list = [(BernoulliNB(alpha=naive_bayes_a),"(Binomial)-Naive Bayes","b"),
 			(MultinomialNB(alpha=naive_bayes_a),"(Multinomial)-Naive Bayes","k"),
 			(KNeighborsClassifier(n_neighbors=k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor","r"),
