@@ -50,7 +50,7 @@ def wordcloud_generator(dataset):
 
 # The main of the program start here #
 if __name__ == "__main__":
-	print"  WordCloud Program starts..."
+	print"   WordCloud Program starts..."
 	print('=' * 60)
 	dataset=dcvs.import_from_csv(sys.argv[1])
 	wordcloud_generator(dataset)
