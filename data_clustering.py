@@ -10,7 +10,7 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 from scipy.spatial.distance import cosine
-import data_csv_functions as dcvs
+import data_csv_functions as dcsv
 
 def init_vector(data):
 	print"Vectorization of data initializes."
@@ -98,6 +98,6 @@ if __name__ == "__main__":
 	print('-' * 60)
 	formated_results=generate_formated_results(dataset, X_train, clusters)
 	print('+' * 60)
-	dcvs.export_to_csv_cluster('./data/clustering_KMeans.csv',formated_results)
+	dcsv.export_to_csv_cluster('./data/clustering_KMeans.csv',formated_results)
 	print('=' * 60)
 	print"Program ends..."

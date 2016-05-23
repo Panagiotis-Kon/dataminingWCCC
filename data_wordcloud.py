@@ -9,7 +9,7 @@ import pandas as pd
 from os import path
 from wordcloud import WordCloud
 import sys
-import data_csv_functions as dcvs
+import data_csv_functions as dcsv
 
 def wordcloud_generator(dataset):
 	img_w=960
@@ -52,7 +52,7 @@ def wordcloud_generator(dataset):
 if __name__ == "__main__":
 	print"   WordCloud Program starts..."
 	print('=' * 60)
-	dataset=dcvs.import_from_csv(sys.argv[1])
+	dataset=dcsv.import_from_csv(sys.argv[1])
 	wordcloud_generator(dataset)
 	print('=' * 60)
 	print"Program ends..."

@@ -17,6 +17,7 @@ from sklearn.cross_validation import train_test_split
 from scipy import spatial, interp
 import re
 import nltk
+import sys
 
 from sklearn.metrics  import *
 
@@ -24,9 +25,9 @@ import string
 import pandas as pd
 from os import path
 import matplotlib.pyplot as plt
-import data_csv_functions as dcvs
+import data_csv_functions as dcsv
 
-test_size=0.35
+test_size=0.25
 k_fold=10
 k_neighbors_num=9
 naive_bayes_a=0.05
@@ -105,7 +106,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 
 
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size, random_state=0)
+		X, y, test_size=test_size, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
 	transformer=TfidfTransformer()
@@ -136,12 +137,12 @@ def beat_the_benchmark(X,y,clfname,classifier):
 
 	return accuracy,y_proba,y_test
 
-def predict_category(X,y):
+def predict_category(X,y,file_name):
 	print("Predict the category with k-Nearest Neighbor Classifier...")
 	X_train = X
 	Y_train = y
 
-	df_test = pd.read_csv("./data/test_set.csv",sep="\t")
+	df_test = dcsv.import_from_csv(file_name)
 	X_true_id = df["Id"]
 
 	vectorizer=CountVectorizer(stop_words='english')
@@ -186,7 +187,7 @@ if __name__ == "__main__":
 
 	print("Starting Classification Program")
 	print ("#"*60)
-	df=pd.read_csv("./data/train_set.csv",sep="\t")
+	df=dcsv.import_from_csv(sys.argv[1])
 
 	#do some preprocessing
 	X=df[['Title','Content']]
@@ -197,13 +198,13 @@ if __name__ == "__main__":
 	y=le.transform(df["Category"])
 
 	# make a prediction for the category
-	predict_category(X,y)
+	predict_category(X,y,sys.argv[2])
 
 	# split the train set (70 - 30) in order to have a small test set to check the classifiers
 	print("#"*60)
 	print("Splitting the train set and doing some preprocessing...")
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size, random_state=0)
+		X, y, test_size=test_size, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english')
 	transformer=TfidfTransformer()
@@ -217,12 +218,12 @@ if __name__ == "__main__":
 
 
 #(SVC(kernel='linear', C=1.0), "MyMethod", "m")
-	classifiers_list = [(BernoulliNB(naive_bayes_a),"(Binomial)-Naive Bayes","b"),
-			(MultinomialNB(naive_bayes_a),"(Multinomial)-Naive Bayes","k"),
-			(KNeighborsClassifier(k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor","r"),
+	classifiers_list = [(BernoulliNB(alpha=naive_bayes_a),"(Binomial)-Naive Bayes","b"),
+			(MultinomialNB(alpha=naive_bayes_a),"(Multinomial)-Naive Bayes","k"),
+			(KNeighborsClassifier(n_neighbors=k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor","r"),
 			(SVC(probability=True), "SVM","y"),
-			(RandomForestClassifier(random_forests_estimators,n_jobs=-1), "Random forest","g"),
-			(SVC(kernel='linear', svm_C,probability=True), "MyMethod", "m")]
+			(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest","g"),
+			(SVC(kernel='linear', C=svm_C,probability=True), "MyMethod", "m")]
 
 	for clf, clfname, color in classifiers_list:
 			print('=' * 60)
@@ -251,7 +252,7 @@ if __name__ == "__main__":
 	plt.xlabel('False Positive Rate')
 	plt.ylabel('True Positive Rate')
 	plt.title('ROC')
-	plt.legend(loc='lower right')
+	plt.legend(loc=4)
 	plt.savefig("./data/roc_10fold.png")
 
 	dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold.csv",validation_results)
