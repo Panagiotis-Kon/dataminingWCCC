@@ -222,7 +222,7 @@ if __name__ == "__main__":
 #(SVC(kernel='linear', C=1.0), "MyMethod", "m")
 	classifiers_list = [(BernoulliNB(alpha=0.05),"(Binomial)-Naive Bayes","b"),
 			(MultinomialNB(alpha=0.05),"(Multinomial)-Naive Bayes","k"),
-			(KNeighborsClassifier(n_neighbors=8,n_jobs=-1), "k-Nearest Neighbor","r"),
+			(KNeighborsClassifier(n_neighbors=9,n_jobs=-1), "k-Nearest Neighbor","r"),
 			(SVC(probability=True), "SVM","y"),
 			(RandomForestClassifier(n_estimators=100,n_jobs=-1), "Random forest","g"),
 			(SVC(kernel='linear', C=1.0,probability=True), "MyMethod", "m")]
