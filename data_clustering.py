@@ -87,10 +87,38 @@ def generate_formated_results(dataset,X_train,clusters):
 	print"Genarating results finished."
 	return formated_results
 
+def generate_formated_results2(dataset,X_train,clusters):
+	print"Genarating results."
+	sys.stdout.write("Processing: ")
+	formated_results=[]
+	for cluster, vectors in clusters:
+		politics=business=football=film=technology=0.0
+		dataLength=len(cluster)
+		# update the bar
+		sys.stdout.write("#")
+		sys.stdout.flush()
+		for vector in vectors:
+			itemindex = np.where(vector==X_train)
+			if X_init.ix[itemindex[0][0]][2] == "Politics":
+				politics+=1.0
+			elif X_init.ix[itemindex[0][0]][2] == "Business":
+				business+=1.0
+			elif X_init.ix[itemindex[0][0]][2] == "Football":
+				football+=1.0
+			elif X_init.ix[itemindex[0][0]][2] == "Film":
+				film+=1.0
+			else:
+				technology+=1.0
+		d={'Politics':politics/dataLength,'Business':business/dataLength,'Football':football/dataLength,'Film':film/dataLength,'technology':technology/dataLength}
+		formated_results.append(d)
+	print
+	print"Genarating results finished."
+	return formated_results
+
 print"Program starts..."
 dataset=dcvs.import_from_csv(sys.argv[1])
 X_train=init_vector(dataset)
 centers, clusters = find_centers(X_train,5) # In this example K=5
-results=generate_formated_results(dataset, X_train, clusters)
-dcvs.export_to_csv('./data/clustering_KMeans.csv',results)
+formated_results=generate_formated_results(dataset, X_train, clusters)
+dcvs.export_to_csv('./data/clustering_KMeans.csv',formated_results)
 print"Program ends..."
