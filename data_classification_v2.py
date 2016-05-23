@@ -111,7 +111,7 @@ if __name__ == "__main__":
 	# split the train set (70 - 30) in order to have a small test set to check the classifiers
 
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size=0.3, random_state=0)
+		X, y, test_size=0.33, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english')
 	transformer=TfidfTransformer()
@@ -127,7 +127,7 @@ if __name__ == "__main__":
 #(SVC(kernel='linear', C=1.0), "MyMethod", "m")
 	classifiers_list = [(BernoulliNB(alpha=0.05),"(Binomial)-Naive Bayes","b"),
 			(MultinomialNB(alpha=0.05),"(Multinomial)-Naive Bayes","k"),
-			(KNeighborsClassifier(n_neighbors=9,n_jobs=-1), "k-Nearest Neighbor","r"),
+			(KNeighborsClassifier(n_neighbors=5,n_jobs=-1), "k-Nearest Neighbor","r"),
 			(SVC(probability=True), "SVM","y"),
 			(RandomForestClassifier(n_estimators=1000,n_jobs=-1), "Random forest","g")
 			]

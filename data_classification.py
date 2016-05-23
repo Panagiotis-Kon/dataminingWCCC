@@ -109,11 +109,11 @@ if __name__ == "__main__":
 	print("*"*60)
 	print("Classification")
 
-	classifiers_list = [(BernoulliNB(alpha=0.01),"(Binomial)-Naive Bayes","b"),
-        	(MultinomialNB(alpha=0.01),"(Multinomial)-Naive Bayes","k"),
-        	(KNeighborsClassifier(n_neighbors=9,n_jobs=-1), "k-Nearest Neighbor","r"),
+	classifiers_list = [(BernoulliNB(alpha=0.05),"(Binomial)-Naive Bayes","b"),
+        	(MultinomialNB(alpha=0.05),"(Multinomial)-Naive Bayes","k"),
+        	(KNeighborsClassifier(n_neighbors=10,n_jobs=-1), "k-Nearest Neighbor","r"),
         	(SVC(probability=True), "SVM","y"),
-        	(RandomForestClassifier(n_estimators=1000,n_jobs=-1), "Random forest","g")]
+        	(RandomForestClassifier(n_estimators=100,n_jobs=-1), "Random forest","g")]
 
 	for clf, clfname, color in classifiers_list:
             print('=' * 60)
