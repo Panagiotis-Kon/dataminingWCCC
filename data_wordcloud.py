@@ -34,8 +34,9 @@ def wordcloud_generator(dataset):
 		   	list_categories[row['Category']] = row['Content']
 	print
 	print("Categories created.")
+	print('+' * 60)
 	print("Creating word clouds.")
-	print
+	print('-' * 60)
 	for category, words in list_categories.iteritems():
 		# update for process
 		print("Creating Category: "+category)
@@ -43,11 +44,15 @@ def wordcloud_generator(dataset):
 		image = wordcloud.to_image()
 		image.save("data/Wordcloud_" + category + "_" + str(img_w) + "x" + str(img_h) + ".png")
 		image.show()
-	print
+	print('-' * 60)
 	print("WordClouds' creation finished.")
 	return
 
-print"Program starts..."
-dataset=dcvs.import_from_csv(sys.argv[1])
-wordcloud_generator(dataset)
-print"Program ends..."
+# The main of the program start here #
+if __name__ == "__main__":
+	print"  WordCloud Program starts..."
+	print('=' * 60)
+	dataset=dcvs.import_from_csv(sys.argv[1])
+	wordcloud_generator(dataset)
+	print('=' * 60)
+	print"Program ends..."
