@@ -93,11 +93,9 @@ if __name__ == "__main__":
 	print('=' * 60)
 	dataset=dcsv.import_from_csv(sys.argv[1])
 	X_train=init_vector(dataset)
-	print('+' * 60)
 	centers, clusters = find_centers(X_train,5) # In this example K=5
 	print('-' * 60)
 	formated_results=generate_formated_results(dataset, X_train, clusters)
-	print('+' * 60)
 	dcsv.export_to_csv_cluster('./data/clustering_KMeans.csv',formated_results)
 	print('=' * 60)
 	print"Program ends..."
