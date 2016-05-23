@@ -244,12 +244,12 @@ if __name__ == "__main__":
 	#create the ROC plot with the data generate from above
 	plt.plot([0, 1], [0, 1], '--', color=(0.6, 0.6, 0.6), label='Luck')
 
-	plt.xlim([0, 0.2])
-	plt.ylim([0.8, 1])
+	plt.xlim([-0.05, 1.05])
+	plt.ylim([-0.05, 1.05])
 	plt.xlabel('False Positive Rate')
 	plt.ylabel('True Positive Rate')
 	plt.title('ROC')
-	plt.legend(loc=4)
+	plt.legend(loc="lower right")
 	plt.savefig("./data/roc_10fold.png")
 
 	dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold.csv",validation_results)
