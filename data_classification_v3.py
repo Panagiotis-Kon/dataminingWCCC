@@ -26,6 +26,13 @@ from os import path
 import matplotlib.pyplot as plt
 import data_csv_functions as dcvs
 
+test_size=0.35
+k_fold=10
+k_neighbors_num=9
+naive_bayes_a=0.05
+svm_C=1.0
+random_forests_estimators=100
+
 
 # The classification function uses the pipeline in order to ease the procedure
 # and also makes use of the GridSearchCV for the cross validation, without an tuned
@@ -43,8 +50,6 @@ def classification(clfname,classifier):
 			('tfidf', transformer),
 			('clf', classifier)
 		])
-		#grid_search = GridSearchCV(pipeline, {}, cv=10,n_jobs=-1)
-		#grid_search.fit(X_train,y_train)
 	else:
 		pipeline = Pipeline([
 			('vect', vectorizer),
@@ -56,17 +61,9 @@ def classification(clfname,classifier):
 	grid_search = GridSearchCV(pipeline, {}, cv=10,n_jobs=-1)
 	grid_search.fit(X_train,y_train)
 	print
-	#print("Best params: " % grid_search.best_params_)
 	print('*' * 60)
 	predicted=grid_search.predict(X_test)
-	y_pred = grid_search.best_estimator_.predict(X_test)
 	y_proba = grid_search.best_estimator_.predict_proba(X_test)
-	#y_test_boolean = []
-
-	#for index, item in enumerate(y_pred):
-		#y_test_boolean.append(item == y_test[index])
-	#fpr, tpr, thresholds = metrics.roc_curve(y_test_boolean, y_proba[:, 1])
-
 
 	accuracy = metrics.accuracy_score(y_test, predicted)
 	print(metrics.classification_report(le.inverse_transform(y_test), le.inverse_transform(predicted)))
@@ -108,7 +105,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 
 
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size=0.35, random_state=0)
+		X, y, test_size, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
 	transformer=TfidfTransformer()
@@ -150,7 +147,7 @@ def predict_category(X,y):
 	vectorizer=CountVectorizer(stop_words='english')
 	transformer=TfidfTransformer()
 	svd=TruncatedSVD(n_components=10, random_state=42)
-	clf=KNeighborsClassifier(n_neighbors=9,n_jobs=-1)
+	clf=KNeighborsClassifier(k_neighbors_num,n_jobs=-1)
 
 
 	pipeline = Pipeline([
@@ -206,7 +203,7 @@ if __name__ == "__main__":
 	print("#"*60)
 	print("Splitting the train set and doing some preprocessing...")
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size=0.35, random_state=0)
+		X, y, test_size, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english')
 	transformer=TfidfTransformer()
@@ -220,12 +217,12 @@ if __name__ == "__main__":
 
 
 #(SVC(kernel='linear', C=1.0), "MyMethod", "m")
-	classifiers_list = [(BernoulliNB(alpha=0.05),"(Binomial)-Naive Bayes","b"),
-			(MultinomialNB(alpha=0.05),"(Multinomial)-Naive Bayes","k"),
-			(KNeighborsClassifier(n_neighbors=9,n_jobs=-1), "k-Nearest Neighbor","r"),
+	classifiers_list = [(BernoulliNB(naive_bayes_a),"(Binomial)-Naive Bayes","b"),
+			(MultinomialNB(naive_bayes_a),"(Multinomial)-Naive Bayes","k"),
+			(KNeighborsClassifier(k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor","r"),
 			(SVC(probability=True), "SVM","y"),
-			(RandomForestClassifier(n_estimators=100,n_jobs=-1), "Random forest","g"),
-			(SVC(kernel='linear', C=1.0,probability=True), "MyMethod", "m")]
+			(RandomForestClassifier(random_forests_estimators,n_jobs=-1), "Random forest","g"),
+			(SVC(kernel='linear', svm_C,probability=True), "MyMethod", "m")]
 
 	for clf, clfname, color in classifiers_list:
 			print('=' * 60)
