@@ -87,34 +87,6 @@ def generate_formated_results(dataset,X_train,clusters):
 	print"Genarating results finished."
 	return formated_results
 
-def generate_formated_results2(dataset,X_train,clusters):
-	print"Genarating results."
-	sys.stdout.write("Processing: ")
-	formated_results=[]
-	for cluster, vectors in clusters:
-		politics=business=football=film=technology=0.0
-		dataLength=len(cluster)
-		# update the bar
-		sys.stdout.write("#")
-		sys.stdout.flush()
-		for vector in vectors:
-			itemindex = np.where(vector==X_train)
-			if X_init.ix[itemindex[0][0]][2] == "Politics":
-				politics+=1.0
-			elif X_init.ix[itemindex[0][0]][2] == "Business":
-				business+=1.0
-			elif X_init.ix[itemindex[0][0]][2] == "Football":
-				football+=1.0
-			elif X_init.ix[itemindex[0][0]][2] == "Film":
-				film+=1.0
-			else:
-				technology+=1.0
-		d={'Politics':politics/dataLength,'Business':business/dataLength,'Football':football/dataLength,'Film':film/dataLength,'technology':technology/dataLength}
-		formated_results.append(d)
-	print
-	print"Genarating results finished."
-	return formated_results
-
 # The main of the program start here #
 if __name__ == "__main__":
 	print"Program starts..."
@@ -126,6 +98,6 @@ if __name__ == "__main__":
 	print('-' * 60)
 	formated_results=generate_formated_results(dataset, X_train, clusters)
 	print('+' * 60)
-	dcvs.export_to_csv('./data/clustering_KMeans.csv',formated_results)
+	dcvs.export_to_csv_cluster('./data/clustering_KMeans.csv',formated_results)
 	print('=' * 60)
 	print"Program ends..."

@@ -42,7 +42,7 @@ def wordcloud_generator(dataset):
 		print("Creating Category: "+category)
 		wordcloud.generate(words)
 		image = wordcloud.to_image()
-		image.save("data/Wordcloud_" + category + "_" + str(img_w) + "x" + str(img_h) + ".png")
+		image.save("./data/Wordcloud_" + category + "_" + str(img_w) + "x" + str(img_h) + ".png")
 		image.show()
 	print('-' * 60)
 	print("WordClouds' creation finished.")

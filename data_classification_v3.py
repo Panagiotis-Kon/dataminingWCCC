@@ -24,6 +24,7 @@ import string
 import pandas as pd
 from os import path
 import matplotlib.pyplot as plt
+import data_csv_functions as dcvs
 
 
 # The classification function uses the pipeline in order to ease the procedure
@@ -107,7 +108,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 
 
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size=0.3, random_state=0)
+		X, y, test_size=0.35, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
 	transformer=TfidfTransformer()
@@ -179,16 +180,7 @@ def predict_category(X,y):
 	# Append the result to the csv
 	df_out = pd.DataFrame(out_dic)
 	print("Exporting predicted category to csv")
-	df_out.to_csv('./data/testSet_categories.csv', sep='\t')
-
-
-
-# Exports the validation results ton the csv
-def export_to_csv():
-
-	print("Exporting to csv...")
-	dataframe = pd.DataFrame.from_dict(validation_results, orient='index')
-	dataframe.to_csv("./data/EvaluationMetric_10fold.csv", sep='\t', encoding='utf-8', float_format='%.3f', index_label="Statistic Measure")
+	dcsv.export_to_csv_categories("./data/testSet_categories.csv",out_dic)
 
 
 ################################################################################
@@ -214,7 +206,7 @@ if __name__ == "__main__":
 	print("#"*60)
 	print("Splitting the train set and doing some preprocessing...")
 	X_train, X_test, y_train, y_test = train_test_split(
-		X, y, test_size=0.3, random_state=0)
+		X, y, test_size=0.35, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english')
 	transformer=TfidfTransformer()
@@ -265,4 +257,4 @@ if __name__ == "__main__":
 	plt.legend(loc='lower right')
 	plt.savefig("./data/roc_10fold.png")
 
-	export_to_csv()
+	dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold.csv",validation_results)
