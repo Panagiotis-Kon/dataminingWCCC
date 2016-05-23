@@ -32,7 +32,7 @@ def export_to_csv_statistic(file_name,data):
 	print('=' * 60)
 	print("Exporting to file: %s" % str(file_name))
 	dataset = pd.DataFrame.from_dict(data, orient='index')
-	dataset.to_csv(file_name, sep='\t', encoding='utf-8', float_format='%.2f', index_label="Statistic Measure")
+	dataset.to_csv(file_name, sep='\t', encoding='utf-8', float_format='%.3f', index_label="Statistic Measure")
 	print("Exporting finished.")
 	print('=' * 60)
 	return
