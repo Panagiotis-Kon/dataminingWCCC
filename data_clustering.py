@@ -91,7 +91,7 @@ def generate_formated_results(dataset,X_train,clusters):
 if __name__ == "__main__":
 	print"Program starts..."
 	print('=' * 60)
-	dataset=dcvs.import_from_csv(sys.argv[1])
+	dataset=dcsv.import_from_csv(sys.argv[1])
 	X_train=init_vector(dataset)
 	print('+' * 60)
 	centers, clusters = find_centers(X_train,5) # In this example K=5
