@@ -10,7 +10,7 @@ def import_from_csv(file_name):
 	print('=' * 60)
 	return dataset
 
-def export_to_csv_1(file_name,data):
+def export_to_csv_categories(file_name,data):
 	print('=' * 60)
 	print("Exporting to file: %s" % str(file_name))
 	dataset = pd.DataFrame.from_dict(data, orient='index')
@@ -19,7 +19,7 @@ def export_to_csv_1(file_name,data):
 	print('=' * 60)
 	return
 
-def export_to_csv_2(file_name,data):
+def export_to_csv_cluster(file_name,data):
 	print('=' * 60)
 	print("Exporting to file: %s" % str(file_name))
 	dataset = pd.DataFrame.from_dict(data, orient='index')
@@ -28,7 +28,7 @@ def export_to_csv_2(file_name,data):
 	print('=' * 60)
 	return
 
-def export_to_csv_3(file_name,data):
+def export_to_csv_statistic(file_name,data):
 	print('=' * 60)
 	print("Exporting to file: %s" % str(file_name))
 	dataset = pd.DataFrame.from_dict(data, orient='index')
