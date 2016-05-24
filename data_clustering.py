@@ -70,18 +70,18 @@ def generate_formated_results(dataset,X_train,clusters):
 		# update the bar
 		sys.stdout.write("#")
 		sys.stdout.flush()
-		total = 0
+		total_sum = 0
 		cluster_index = "Cluster" + str(cluster + 1)
 		formated_results[cluster_index] = {}
 		for vector in vectors:
-			total += 1
+			total_sum += 1
 			category = category_list[np.where(X_train == vector)[0][0]]
 			try:
 				formated_results[cluster_index][category] += 1
 			except KeyError:
 				formated_results[cluster_index][category] = 1
 		for category in formated_results[cluster_index]:
-			formated_results[cluster_index][category] = round(formated_results[cluster_index][category] / float(total), 2)
+			formated_results[cluster_index][category] = round(formated_results[cluster_index][category] / float(total_sum), 2)
 	print
 	print"Genarating results finished."
 	return formated_results
