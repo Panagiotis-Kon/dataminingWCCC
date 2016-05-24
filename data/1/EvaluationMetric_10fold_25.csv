@@ -1,3 +1,0 @@
-Statistic Measure	k-Nearest Neighbor	(Binomial)-Naive Bayes	SVM	(Multinomial)-Naive Bayes	Random forest
-Accuracy	0.952	0.943	0.934	0.958	0.951
-ROC	0.996	0.984	0.999	0.999	0.998
