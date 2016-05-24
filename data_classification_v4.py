@@ -236,7 +236,7 @@ if __name__ == "__main__":
 			(KNeighborsClassifier(n_neighbors=k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor","r"),
 			(SVC(probability=True), "SVM","y"),
 			(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest","g"),
-			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method", "m")]
+			(SGDClassifier(loss='modified_huber',alpha=0.0001, penalty='l2'), "My Method", "m")]
 
 	#Loop through the classifiers list. If it is the My Method then call beat the benchmark
 	for clf, clfname, color in classifiers_list:
