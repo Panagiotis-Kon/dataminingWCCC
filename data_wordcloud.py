@@ -11,6 +11,7 @@ from wordcloud import WordCloud
 import sys
 import data_csv_functions as dcsv
 
+# Method for wordcloud generation
 def wordcloud_generator(dataset):
 	img_w=960
 	img_h=540
@@ -55,4 +56,4 @@ if __name__ == "__main__":
 	dataset=dcsv.import_from_csv(sys.argv[1])
 	wordcloud_generator(dataset)
 	print('=' * 60)
-	print"Program ends..."
+	print"   WordCloud Program ends..."

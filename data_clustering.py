@@ -82,14 +82,13 @@ def generate_formated_results(dataset,X_train,clusters):
 				formated_results[cluster_index][category] = 1
 		for category in formated_results[cluster_index]:
 			formated_results[cluster_index][category] = round(formated_results[cluster_index][category] / float(total), 2)
-			#formated_results[cluster_index][category] = formated_results[cluster_index][category] / float(total)
 	print
 	print"Genarating results finished."
 	return formated_results
 
 # The main of the program start here #
 if __name__ == "__main__":
-	print"Program starts..."
+	print"   Clustering with K-Means Program starts..."
 	print('=' * 60)
 	dataset=dcsv.import_from_csv(sys.argv[1])
 	X_train=init_vector(dataset)
@@ -98,4 +97,4 @@ if __name__ == "__main__":
 	formated_results=generate_formated_results(dataset, X_train, clusters)
 	dcsv.export_to_csv_cluster('./data/clustering_KMeans.csv',formated_results)
 	print('=' * 60)
-	print"Program ends..."
+	print"   Clustering with K-Means Program ends..."
