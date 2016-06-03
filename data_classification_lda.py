@@ -201,7 +201,7 @@ def predict_category(X,y,file_name):
 ###################### Here starts the main of the program #####################
 if __name__ == "__main__":
 
-	print("Starting Classification Program")
+	print("Starting LDA Classification Program")
 	print ("#"*60)
 	df=dcsv.import_from_csv(sys.argv[1])
 
@@ -223,17 +223,17 @@ if __name__ == "__main__":
 		X, y, test_size=test_size, random_state=0)
 
 	vectorizer=CountVectorizer(stop_words='english')
-	X = vectorizer.fit_transform(df)
+	X_lda = vectorizer.fit_transform(df)
 	vocab = vectorizer.get_feature_names()
 	# Fit LDA.
-	lda=LdaModel(matutils.Sparse2Corpus(X), num_topics=5, passes=20, id2word=dict([(i, s) for i, s in enumerate(vocab)]))
+	print("Fit LDA.")
+	lda=LdaModel(matutils.Sparse2Corpus(X_lda), num_topics=5, passes=20, id2word=dict([(i, s) for i, s in enumerate(vocab)]))
 	n=10
-	topics = lda.show_topics()
-	for ti, topic in enumerate(topics):
-		print 'topic %d: %s' % (ti, ' '.join('%s/%.2f' % (t[1], t[0]) for t in topic))
+	lda.show_topics()
+	print(lda.show_topics())
 
-	#transformer=TfidfTransformer()
-	#svd=TruncatedSVD(n_components=10, random_state=42)
+	transformer=TfidfTransformer()
+	svd=TruncatedSVD(n_components=10, random_state=42)
 
 	# initiate the array, which will hold all the results for the csv
 	validation_results = {"Accuracy": {}, "ROC": {}}
