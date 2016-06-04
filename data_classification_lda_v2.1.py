@@ -15,7 +15,7 @@ from sklearn.cross_validation import train_test_split
 from scipy import spatial, interp
 import re
 import nltk
-nltk.download()
+#nltk.download()
 import sys
 
 from sklearn.metrics  import *
