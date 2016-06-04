@@ -40,7 +40,7 @@ random_forests_estimators=100
 # The classification function uses the pipeline in order to ease the procedure
 # and also makes use of the GridSearchCV for the cross validation, without any tuned
 # parameters, which makes it quicker
-def classification(clfname,classifier):
+def classification(clfname,classifier,X_train,y_train,X_test):
 	print('-' * 60)
 	print("Training %s" % clfname)
 	print
@@ -305,7 +305,7 @@ if __name__ == "__main__":
 				print('=' * 60)
 				print(clfname)
 				#accuracy_res = classification_lda(clfname,clf,x_train,y_train,x_test,y_test)
-				accuracy_res = classification(clfname,clf)
+				accuracy_res = classification(clfname,clf,x_train,y_train,x_test)
 				if k==10:
 					validation_results["Accuracy K=10"][clfname] = accuracy_res
 				elif k==100:
