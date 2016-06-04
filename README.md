@@ -42,6 +42,7 @@
 * sudo apt-get -y install python-nose
 * sudo apt-get -y install python-mock
 * sudo apt-get -y install python-matplotlib
+* sudo apt-get -y install python-nltk
 * sudo apt-get -y install python-gensim
 
 # <a name="windows"></a>Windows Installation
