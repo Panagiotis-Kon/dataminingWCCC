@@ -37,6 +37,7 @@ sudo apt-get -y install python-pillow
 sudo apt-get -y install python-nose
 sudo apt-get -y install python-mock
 sudo apt-get -y install python-matplotlib
+sudo apt-get -y install python-gensim
 
 Windows Installation
 Install python
