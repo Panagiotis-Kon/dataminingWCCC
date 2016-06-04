@@ -66,12 +66,12 @@ def classification(clfname,classifier):
 	print
 	print('*' * 60)
 	predicted=grid_search.predict(X_test)
-	y_proba = grid_search.best_estimator_.predict_proba(X_test)
+	#y_proba = grid_search.best_estimator_.predict_proba(X_test)
 
 	accuracy = metrics.accuracy_score(y_test, predicted)
 	print(metrics.classification_report(le.inverse_transform(y_test), le.inverse_transform(predicted)))
 
-	return accuracy,y_proba
+	return accuracy#,y_proba
 
 
 def classification_lda(clfname,classifier,x_train,y_train,x_test,y_test):
@@ -80,7 +80,22 @@ def classification_lda(clfname,classifier,x_train,y_train,x_test,y_test):
 	print
 	print(classifier)
 
-	grid_search = GridSearchCV(classifier, {}, cv=k_fold,n_jobs=-1)
+	if(clfname == "(Binomial)-Naive Bayes" or clfname == "(Multinomial)-Naive Bayes"):
+
+		pipeline = Pipeline([
+			('vect', vectorizer),
+			('tfidf', transformer),
+			('clf', classifier)
+		])
+	else:
+		pipeline = Pipeline([
+			('vect', vectorizer),
+			('tfidf', transformer),
+			('svd',svd),
+			('clf', classifier)
+		])
+
+	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
 	grid_search.fit(x_train,y_train)
 	print
 	print('*' * 60)
@@ -238,7 +253,7 @@ if __name__ == "__main__":
 	print("Preprocessing complete\n")
 	validation_results = {"Accuracy K=10": {}, "Accuracy K=100": {}}
 
-	K=[10,100]
+	K=[10]
 	for k in K:
 		print("Training LDA %d \n" % k)
 		#Train LDA with K=10
@@ -265,7 +280,9 @@ if __name__ == "__main__":
 		x_train, x_test, y_train, y_test = train_test_split(
 			X, y, test_size=test_size, random_state=0)
 
-
+		vectorizer=CountVectorizer(stop_words='english')
+		transformer=TfidfTransformer()
+		svd=TruncatedSVD(n_components=10, random_state=42)
 
 		# initiate the array, which will hold all the results for the csv
 		
@@ -280,14 +297,15 @@ if __name__ == "__main__":
 				(MultinomialNB(alpha=naive_bayes_a),"(Multinomial)-Naive Bayes","k"),
 				(KNeighborsClassifier(n_neighbors=k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor","r"),
 				(SVC(probability=True), "SVM","y"),
-				(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest","g"),
-				(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method", "m")]
+				(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest","g")]#,
+				#(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method", "m")]
 
 		#Loop through the classifiers list. If it is the My Method then call beat the benchmark
 		for clf, clfname, color in classifiers_list:
 				print('=' * 60)
 				print(clfname)
-				accuracy_res = classification_lda(clfname,clf,x_train,y_train,x_test,y_test)
+				#accuracy_res = classification_lda(clfname,clf,x_train,y_train,x_test,y_test)
+				accuracy_res = classification(clfname,clf)
 				if k==10:
 					validation_results["Accuracy K=10"][clfname] = accuracy_res
 				elif k==100:
@@ -298,4 +316,4 @@ if __name__ == "__main__":
 
 	
 
-	dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold_lda_only.csv",validation_results)
+	dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold_ex1_features.csv",validation_results)
