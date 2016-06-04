@@ -16,6 +16,7 @@ from scipy import spatial, interp
 import re
 import nltk
 import sys
+import scipy.sparse as sparce
 
 from sklearn.metrics  import *
 
@@ -45,14 +46,11 @@ def classification(clfname,classifier,X_train,y_train,X_test,y_test):
 	print("Training %s" % clfname)
 	print
 	print(classifier)
+	
 
 	if(clfname == "(Binomial)-Naive Bayes" or clfname == "(Multinomial)-Naive Bayes"):
 
-		pipeline = Pipeline([
-			('vect', vectorizer),
-			('tfidf', transformer),
-			('clf', classifier)
-		])
+		grid_search = GridSearchCV(classifier, {}, cv=k_fold,n_jobs=-1)
 	else:
 		pipeline = Pipeline([
 			('vect', vectorizer),
@@ -60,8 +58,8 @@ def classification(clfname,classifier,X_train,y_train,X_test,y_test):
 			('svd',svd),
 			('clf', classifier)
 		])
+		grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
 
-	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
 	grid_search.fit(X_train,y_train)
 	print
 	print('*' * 60)
@@ -261,18 +259,24 @@ if __name__ == "__main__":
 		#For every doc get its topic distribution
 		corpus_lda = lda[corpus]
 		i=0
-		X=[]
+		X_lda=[]
 		print("Creating vectors")
 		#Create numpy arrays from the GenSim output
 		for l,t in zip(corpus_lda,corpus):
   			ldaFeatures=np.zeros(k)
   			for l_k in l:
   				ldaFeatures[l_k[0]]=l_k[1]
-  			X.append(ldaFeatures)
+  			X_lda.append(ldaFeatures)
 		#Train the classifier ...
 
 		# make a prediction for the category
 		#predict_category(X,y,sys.argv[2])
+		vectorizer=CountVectorizer(stop_words='english')
+		transformer=TfidfTransformer()
+		svd=TruncatedSVD(n_components=20, random_state=42)
+		X=vectorizer.fit_transform(X)
+		X=transformer.fit_transform(X)
+		X = sparce.hstack((X, X_lda), format='csr')
 
 		# split the train set (75 - 25) in order to have a small test set to check the classifiers
 		print("#"*60)
@@ -280,9 +284,7 @@ if __name__ == "__main__":
 		x_train, x_test, y_train, y_test = train_test_split(
 			X, y, test_size=test_size, random_state=0)
 
-		vectorizer=CountVectorizer(stop_words='english')
-		transformer=TfidfTransformer()
-		svd=TruncatedSVD(n_components=10, random_state=42)
+		
 
 		# initiate the array, which will hold all the results for the csv
 		
