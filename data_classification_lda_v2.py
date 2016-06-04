@@ -215,7 +215,7 @@ if __name__ == "__main__":
 	X=X.apply(f, 1)
 	le=preprocessing.LabelEncoder()
 	le.fit(df["Category"])
-	y=list(le.transform(df["Category"]))
+	y=le.transform(df["Category"])
 	documents=X
 	#Preprocess the target variable (ex.1)
 	#le = preprocessing.LabelEncoder()
