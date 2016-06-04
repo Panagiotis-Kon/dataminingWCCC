@@ -23,6 +23,7 @@
 * sudo pip install nose
 * sudo pip install mock
 * sudo pip install matplotlib
+* sudo pip install nltk
 * wget https://github.com/amueller/word_cloud/archive/master.zip
 * unzip master.zip
 * rm master.zip
