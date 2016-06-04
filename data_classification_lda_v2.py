@@ -227,6 +227,8 @@ if __name__ == "__main__":
 	#y=list(Y_train[0:10000])
 
 
+	print("LDA List")
+	X_LSI=[]
 	#Convert docs to a list where elements are a tokens list
 	docsList=[document.lower().split() for document in documents]
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
@@ -256,12 +258,15 @@ if __name__ == "__main__":
 
 		# make a prediction for the category
 		#predict_category(X,y,sys.argv[2])
+		print("Vector List")
 		vectorizer=CountVectorizer(stop_words='english')
 		transformer=TfidfTransformer()
 		svd=TruncatedSVD(n_components=20, random_state=42)
-		X=vectorizer.fit_transform(X)
-		X=transformer.fit_transform(X)
-		X_both = sparce.hstack((X, X_lda), format='csr')
+		X_vect=vectorizer.fit_transform(X)
+		X_vect=transformer.fit_transform(X_vect)
+		X_LSI=svd.fit_transform(X_vect)
+		print("Combine Lists")
+		X_both = sparce.hstack((X_vect, X_lda), format='csr')
 
 		# split the train set (75 - 25) in order to have a small test set to check the classifiers
 		print("#"*60)
