@@ -241,7 +241,7 @@ if __name__ == "__main__":
 	corpus = [dictionary.doc2bow(text) for text in corpus]
 	print("Preprocessing complete\n")
 	combined_results = {"Accuracy K=10": {}, "Accuracy K=100": {}, "Accuracy K=1000": {}}
-	validation_results = {"Accuracy K=10": {}, "Accuracy K=100": {}, "Accuracy K=1000": {}}
+	lda_results = {"Accuracy K=10": {}, "Accuracy K=100": {}, "Accuracy K=1000": {}}
 
 	# list of tuples for the classifiers
 	# the tuple contains (classifier, name of the method, color for the auc plot)
@@ -320,11 +320,11 @@ if __name__ == "__main__":
 						combined_results["Accuracy K=1000"][clfname] = accuracy_res
 				else:
 					if k==10:
-						validation_results["Accuracy K=10"][clfname] = accuracy_res
+						lda_results["Accuracy K=10"][clfname] = accuracy_res
 					elif k==100:
-						validation_results["Accuracy K=100"][clfname] = accuracy_res
+						lda_results["Accuracy K=100"][clfname] = accuracy_res
 					else :
-						validation_results["Accuracy K=1000"][clfname] = accuracy_res
+						lda_results["Accuracy K=1000"][clfname] = accuracy_res
 
 
 	
