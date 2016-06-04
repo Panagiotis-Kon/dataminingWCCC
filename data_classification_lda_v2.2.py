@@ -257,7 +257,7 @@ if __name__ == "__main__":
 	K=[10,100,1000,10,100,1000]
 	for k in K:
 		print("Number of Topics: %d \n" % k)
-		count++
+		count=count+1
 		
 		lda = LdaModel(corpus, id2word=dictionary, num_topics=k)
 		#For every doc get its topic distribution
