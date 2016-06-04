@@ -47,7 +47,7 @@
 * Install python
 * Install Microsoft Visual C++ Compiler for Python 2.7 (in windows)
 * http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy
-* version depends on the installation
+* version of whl depends on the installation
 * python -m pip install ./numpy-1.11.0+mkl-cp27-cp27m-win_amd64.whl
 * python -m pip install ./scipy-0.17.0-cp27-cp27-win_amd64.whl
 * python -m pip install ./pandas-0.18.1-cp27-cp27m-win_amd64.whl
