@@ -78,22 +78,7 @@ def classification_lda(clfname,classifier,x_train,y_train,x_test,y_test):
 	print
 	print(classifier)
 
-	if(clfname == "(Binomial)-Naive Bayes" or clfname == "(Multinomial)-Naive Bayes"):
-
-		pipeline = Pipeline([
-			('vect', vectorizer),
-			('tfidf', transformer),
-			('clf', classifier)
-		])
-	else:
-		pipeline = Pipeline([
-			('vect', vectorizer),
-			('tfidf', transformer),
-			('svd',svd),
-			('clf', classifier)
-		])
-
-	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
+	grid_search = GridSearchCV(classifier, {}, cv=k_fold,n_jobs=-1)
 	grid_search.fit(x_train,y_train)
 	print
 	print('*' * 60)
@@ -276,13 +261,13 @@ if __name__ == "__main__":
 		svd=TruncatedSVD(n_components=20, random_state=42)
 		X=vectorizer.fit_transform(X)
 		X=transformer.fit_transform(X)
-		X = sparce.hstack((X, X_lda), format='csr')
+		X_both = sparce.hstack((X, X_lda), format='csr')
 
 		# split the train set (75 - 25) in order to have a small test set to check the classifiers
 		print("#"*60)
 		print("Splitting the train set and doing some preprocessing...")
 		x_train, x_test, y_train, y_test = train_test_split(
-			X, y, test_size=test_size, random_state=0)
+			X_both, y, test_size=test_size, random_state=0)
 
 		
 
@@ -306,8 +291,8 @@ if __name__ == "__main__":
 		for clf, clfname, color in classifiers_list:
 				print('=' * 60)
 				print(clfname)
-				#accuracy_res = classification_lda(clfname,clf,x_train,y_train,x_test,y_test)
-				accuracy_res = classification(clfname,clf,x_train,y_train,x_test,y_test)
+				accuracy_res = classification_lda(clfname,clf,x_train,y_train,x_test,y_test)
+				#accuracy_res = classification(clfname,clf,x_train,y_train,x_test,y_test)
 				if k==10:
 					validation_results["Accuracy K=10"][clfname] = accuracy_res
 				elif k==100:
