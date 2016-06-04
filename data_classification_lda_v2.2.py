@@ -253,9 +253,11 @@ if __name__ == "__main__":
 			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method", "m")]
 
 	print("LDA preprocessing...")
-	K=[10]
+	count=0
+	K=[10,100,1000,10,100,1000]
 	for k in K:
 		print("Number of Topics: %d \n" % k)
+		count++
 		
 		lda = LdaModel(corpus, id2word=dictionary, num_topics=k)
 		#For every doc get its topic distribution
@@ -274,16 +276,18 @@ if __name__ == "__main__":
 		# make a prediction for the category
 		#predict_category(X,y,sys.argv[2])
 
-		print("Vectorizer preprocessing...")
-		vectorizer=CountVectorizer(stop_words='english')
-		transformer=TfidfTransformer()
-		svd=TruncatedSVD(n_components=20, random_state=42)
-		X_vect=vectorizer.fit_transform(X)
-		X_vect=transformer.fit_transform(X_vect)
-		#X_vect=svd.fit_transform(X_vect)
-
-		print("Combine LDA + Vectorizer...")
-		X_both = sparse.hstack((X_vect, X_lda), format='csr')
+		if count==3:
+			print("Vectorizer preprocessing...")
+			vectorizer=CountVectorizer(stop_words='english')
+			transformer=TfidfTransformer()
+			svd=TruncatedSVD(n_components=20, random_state=42)
+			X_vect=vectorizer.fit_transform(X)
+			X_vect=transformer.fit_transform(X_vect)
+			#X_vect=svd.fit_transform(X_vect)
+			print("Combine LDA + Vectorizer...")
+			X_both = sparse.hstack((X_vect, X_lda), format='csr')
+		else:
+			X_both=X_lda
 
 		# split the train set (75 - 25) in order to have a small test set to check the classifiers
 		print("#"*60)
@@ -307,12 +311,20 @@ if __name__ == "__main__":
 				print('=' * 60)
 				print(clfname)
 				accuracy_res = classification_lda(clfname,clf,x_train,y_train,x_test,y_test)
-				if k==10:
-					combined_results["Accuracy K=10"][clfname] = accuracy_res
-				elif k==100:
-					combined_results["Accuracy K=100"][clfname] = accuracy_res
-				else :
-					combined_results["Accuracy K=1000"][clfname] = accuracy_res
+				if count==3:
+					if k==10:
+						combined_results["Accuracy K=10"][clfname] = accuracy_res
+					elif k==100:
+						combined_results["Accuracy K=100"][clfname] = accuracy_res
+					else :
+						combined_results["Accuracy K=1000"][clfname] = accuracy_res
+				else:
+					if k==10:
+						validation_results["Accuracy K=10"][clfname] = accuracy_res
+					elif k==100:
+						validation_results["Accuracy K=100"][clfname] = accuracy_res
+					else :
+						validation_results["Accuracy K=1000"][clfname] = accuracy_res
 
 
 	
