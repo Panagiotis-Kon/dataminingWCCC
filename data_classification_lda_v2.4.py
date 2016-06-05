@@ -322,7 +322,7 @@ if __name__ == "__main__":
 		print("Classification starting...")
 
 		#Loop through the classifiers list
-		for clf, clfname, color in classifiers_list:
+		for clf, clfname in classifiers_list:
 				print('=' * 60)
 				print(clfname)
 				accuracy_res = None
