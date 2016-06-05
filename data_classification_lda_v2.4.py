@@ -360,6 +360,7 @@ if __name__ == "__main__":
 					else :
 						lda_results["Accuracy K=1000"][clfname] = accuracy_res
 		
-	
-	dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_ex1_features.csv",combined_results)				
-	dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_lda_only.csv",lda_results)
+	if user_input==2:
+		dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_ex1_features.csv",combined_results)	
+	else:			
+		dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_lda_only.csv",lda_results)
