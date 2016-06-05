@@ -359,8 +359,7 @@ if __name__ == "__main__":
 						lda_results["Accuracy K=100"][clfname] = accuracy_res
 					else :
 						lda_results["Accuracy K=1000"][clfname] = accuracy_res
-
-		count=count+1				
+		
 	
 	dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_ex1_features.csv",combined_results)				
 	dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_lda_only.csv",lda_results)
