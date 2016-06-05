@@ -181,7 +181,7 @@ def predict_category(X,y,file_name):
 	out_dic.update(category_dic)
 	# Append the result to the csv
 	print("Exporting predicted category to csv")
-	dcsv.export_to_csv_categories("./export/testSet_categories.csv",out_dic)
+	dcsv.export_to_csv_categories("./data/testSet_categories.csv",out_dic)
 
 # Lambda like function
 def merger(x): 
@@ -320,7 +320,7 @@ if __name__ == "__main__":
 		
 	if user_input==2:
 		print("LDA features + ex1 features")
-		dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_ex1_features.csv",combined_results)	
+		dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold_ex1_features.csv",combined_results)	
 	else:			
 		print("LDA features only")
-		dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_lda_only.csv",lda_results)
+		dcsv.export_to_csv_statistic("./data/EvaluationMetric_10fold_lda_only.csv",lda_results)
