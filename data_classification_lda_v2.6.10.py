@@ -31,7 +31,7 @@ from os import path
 import matplotlib.pyplot as plt
 import data_csv_functions as dcsv
 
-test_size=0.25
+test_size=0.28
 k_fold=10
 k_neighbors_num=9
 naive_bayes_a=0.05
@@ -116,7 +116,7 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 		X_vect,X_svd = Ex1_features(X)
 		x_merged = sparse.hstack((X_vect, X_lda), format='csr')
 		print("Vectorizer preprocessing finished...")
-		if k==1000:
+		if k==100:
 			predict_category(x_merged,y)
 	else:
 		x_merged = x_lda
