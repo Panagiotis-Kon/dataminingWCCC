@@ -273,7 +273,7 @@ if __name__ == "__main__":
 			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
 
 	#classifiers_list = [(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
-	K=[10,100,1000]
+	K=[10,100]
 	for k in K:
 		print("LDA Modeling starting...")
 		print("   Number of Topics: %d \n" % k)
