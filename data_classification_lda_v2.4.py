@@ -239,7 +239,7 @@ if __name__ == "__main__":
 	print("1: lda only")
 	print("2: lda + ex1 features")
 	user_input = int(raw_input("Enter the number:  "))
-	while (user_input!=0) and (user_input!=1) and (user_input!=1):
+	while (user_input!=0) and (user_input!=1) and (user_input!=2):
 		user_input = int(raw_input("Enter the number again:  "))
 	if (user_input==0):
 		sys.exit()
