@@ -299,7 +299,7 @@ if __name__ == "__main__":
 		
 
 		if user_input==2:
-			print("count: %d" % count)
+			print("user_input: %d" % user_input)
 			print("Vectorizer preprocessing...")
 			vectorizer=CountVectorizer(stop_words='english')
 			transformer=TfidfTransformer()
