@@ -224,12 +224,13 @@ if __name__ == "__main__":
 
 	# list of tuples for the classifiers
 	# the tuple contains (classifier, name of the method, color for the auc plot)
-	classifiers_list = [(BernoulliNB(alpha=naive_bayes_a),"(Binomial)-Naive Bayes"),
-			(MultinomialNB(alpha=naive_bayes_a),"(Multinomial)-Naive Bayes"),
-			(KNeighborsClassifier(n_neighbors=k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor"),
-			(SVC(probability=True), "SVM"),
-			(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest"),
-			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
+	#classifiers_list = [(BernoulliNB(alpha=naive_bayes_a),"(Binomial)-Naive Bayes"),
+	#		(MultinomialNB(alpha=naive_bayes_a),"(Multinomial)-Naive Bayes"),
+	#		(KNeighborsClassifier(n_neighbors=k_neighbors_num,n_jobs=-1), "k-Nearest Neighbor"),
+	#		(SVC(probability=True), "SVM"),
+	#		(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest"),
+	#		(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
+	classifiers_list = [(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
 
 	K=[10,100]
 	for k in K:
@@ -273,7 +274,7 @@ if __name__ == "__main__":
 				print(clfname)
 				accuracy_res = None
 				if user_input==2:
-					if clfname == "MyMethod":
+					if clfname == "My Method":
 						print("Combine LDA features + features...")
 						X_merged = sparse.hstack((X_vect, X_lda), format='csr')
 						accuracy_res = MyMethod_classifier(X_merged, y, clfname, clf)
@@ -294,7 +295,7 @@ if __name__ == "__main__":
 					else :
 						combined_results["Accuracy K=1000"][clfname] = accuracy_res
 				else:
-					if clfname == "MyMethod":
+					if clfname == "My Method":
 						accuracy_res = MyMethod_classifier(X_lda, y, clfname, clf)
 					else:
 						accuracy_res = default_classification(X_lda, y, clfname, clf)
