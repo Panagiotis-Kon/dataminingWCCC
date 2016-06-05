@@ -29,6 +29,7 @@ import pandas as pd
 from os import path
 import matplotlib.pyplot as plt
 import data_csv_functions as dcsv
+import numpy as np
 
 test_size=0.25
 k_fold=10
@@ -277,7 +278,7 @@ if __name__ == "__main__":
 					if clfname == "My Method":
 						print("Combine LDA features + features...")
 						X_merged = sparse.hstack((X_vect, X_lda), format='csr')
-						X_merged = sparse.csr_matrix(X_merged).todense()
+						X_merged = np.asarray(X_merged)
 						accuracy_res = MyMethod_classifier(X_merged, y, clfname, clf)
 					else:
 						if clfname == "(Binomial)-Naive Bayes" or clfname == "(Multinomial)-Naive Bayes":
