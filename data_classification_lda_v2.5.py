@@ -97,6 +97,7 @@ def MyMethod_classifier(x,y,clfname, classifier):
 	print("My Method Classifier...")
 	print
 	#call a simple stemmer
+	print("Using Lancaster Stemmer")
 	x_stem = Lancaster_stemmer(x)
 	# split the train set (75 - 25) in order to have a small test set to check the classifiers
 	print("#"*60)
