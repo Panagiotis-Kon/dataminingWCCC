@@ -100,17 +100,21 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 	
 	#Convert docs to a list where elements are a tokens list
 	corpus = corpus_tokenizer(x)
-	corpus_stemmed = Lancaster_stemmer(corpus)
+	corpus_stemmed = []
+	for i in corpus:
+		stemmed = Lancaster_stemmer(i)
+		corpus_stemmed.append(stemmed)
+
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
 	dictionary = corpora.Dictionary(corpus_stemmed)
 	#Create the Gen-Sim corpus using the vectorizer
 	corpus_dict = [dictionary.doc2bow(text) for text in corpus_stemmed]
 	print("Preprocessing complete...\n")
-	x_lda = LDA_processing(corpus, dictionary, k)
+	x_lda = LDA_processing(corpus_dict, dictionary, k)
 	x_merged = None
 	if user_input == 2:
 		X_vect,X_svd = Ex1_features(X)
-		x_merged = sparse.hstack((X_vect, X_lda)
+		x_merged = sparse.hstack((X_vect, X_lda), format='csr')
 		print("Vectorizer preprocessing finished...")
 		if k==1000:
 			predict_category(x_merged,y)
@@ -268,7 +272,8 @@ if __name__ == "__main__":
 			(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest"),
 			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
 
-	K=[10]
+	#classifiers_list = [(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
+	K=[10,100,1000]
 	for k in K:
 		print("LDA Modeling starting...")
 		print("   Number of Topics: %d \n" % k)
