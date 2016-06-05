@@ -38,42 +38,8 @@ svm_C=1.0
 random_forests_estimators=100
 
 
-# The classification function uses the pipeline in order to ease the procedure
-# and also makes use of the GridSearchCV for the cross validation, without any tuned
-# parameters, which makes it quicker
-def classification(clfname,classifier):
-	print('-' * 60)
-	print("Training %s" % clfname)
-	print
-	print(classifier)
-
-	if(clfname == "(Binomial)-Naive Bayes" or clfname == "(Multinomial)-Naive Bayes"):
-
-		pipeline = Pipeline([
-			('vect', vectorizer),
-			('tfidf', transformer),
-			('clf', classifier)
-		])
-	else:
-		pipeline = Pipeline([
-			('vect', vectorizer),
-			('tfidf', transformer),
-			('svd',svd),
-			('clf', classifier)
-		])
-
-	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
-	grid_search.fit(X_train,y_train)
-	print
-	print('*' * 60)
-	predicted=grid_search.predict(X_test)
-	y_proba = grid_search.best_estimator_.predict_proba(X_test)
-
-	accuracy = metrics.accuracy_score(y_test, predicted)
-	print(metrics.classification_report(le.inverse_transform(y_test), le.inverse_transform(predicted)))
-
-	return accuracy,y_proba
-
+# The classification function makes use of the GridSearchCV for the cross validation,
+# without any tuned parameters, which makes it quicker
 
 def default_classification(x,y,clfname,classifier):
 	print('-' * 60)
@@ -218,7 +184,7 @@ def predict_category(X,y,file_name):
 	dcsv.export_to_csv_categories("./export/testSet_categories.csv",out_dic)
 
 
-def merger(x):
+def merger(x): # Lambda like function
 	return x['Title']  + ' '+ x['Content']
 
 def corpus_tokenizer(text):
@@ -235,11 +201,10 @@ if __name__ == "__main__":
 
 	print("Starting LDA Classification Program")
 	print("#"*60)
-	print("Give mode:")
-	print
+	print("Give mode:\n")
+	print("1: LDA features only")
+	print("2: LDA features + ex1 features + Category prediction")
 	print("0: exit")
-	print("1: lda only")
-	print("2: lda + ex1 features")
 	user_input = int(raw_input("Enter the number:  "))
 	while (user_input!=0) and (user_input!=1) and (user_input!=2):
 		user_input = int(raw_input("Enter the number again:  "))
@@ -248,6 +213,7 @@ if __name__ == "__main__":
 
 	df=dcsv.import_from_csv(sys.argv[1])
 
+	print("Preprocessing starting...\n")
 	#merge content with title, in order to make use of the title help
 	X=df[['Title','Content']]
 	f=lambda x: x['Title']  + ' '+ x['Content']
@@ -256,16 +222,13 @@ if __name__ == "__main__":
 	le=preprocessing.LabelEncoder()
 	le.fit(df["Category"])
 	y=le.transform(df["Category"])
-	
-
-
 	#Convert docs to a list where elements are a tokens list
 	corpus = corpus_tokenizer(X)
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
 	dictionary = corpora.Dictionary(corpus)
 	#Create the Gen-Sim corpus using the vectorizer
 	corpus = [dictionary.doc2bow(text) for text in corpus]
-	print("Preprocessing complete\n")
+	print("Preprocessing complete...\n")
 	combined_results = {"Accuracy K=10": {}, "Accuracy K=100": {}, "Accuracy K=1000": {}}
 	lda_results = {"Accuracy K=10": {}, "Accuracy K=100": {}, "Accuracy K=1000": {}}
 
@@ -278,47 +241,38 @@ if __name__ == "__main__":
 			(RandomForestClassifier(n_estimators=random_forests_estimators,n_jobs=-1), "Random forest"),
 			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
 
-	print("LDA preprocessing...")
-	K=[10,100]
+	K=[10,100,1000]
 	for k in K:
-		print("Number of Topics: %d \n" % k)
-		
-		
+		print("LDA Modeling starting...")
+		print("   Number of Topics: %d \n" % k)
 		lda = LdaModel(corpus, id2word=dictionary, num_topics=k)
 		#For every doc get its topic distribution
 		corpus_lda = lda[corpus]
 		i=0
 		X_lda=[]
-		print("Creating vectors")
+		print("Creating vectors...")
 		#Create numpy arrays from the GenSim output
 		for l,t in zip(corpus_lda,corpus):
   			ldaFeatures=np.zeros(k)
   			for l_k in l:
   				ldaFeatures[l_k[0]]=l_k[1]
   			X_lda.append(ldaFeatures)
-		
-
+  		print("Creating vectors finished...")
 		
 
 		if user_input==2:
-			print("user_input: %d" % user_input)
-			print("Vectorizer preprocessing...")
+			print("Vectorizer preprocessing starting...")
 			vectorizer=CountVectorizer(stop_words='english')
 			transformer=TfidfTransformer()
 			svd=TruncatedSVD(n_components=20, random_state=42)
 			X_vect=vectorizer.fit_transform(X)
 			X_vect=transformer.fit_transform(X_vect)
 			X_svd=sparse.csr_matrix(svd.fit_transform(X_vect))
-
-			
-			#X_both = sparse.hstack((X_vect, X_lda), format='csr')
+			print("Vectorizer preprocessing finished...")
 			# make a prediction for the category
 			if k==1000:
 				#check this again if we use other classifier
 				predict_category(X_vect,y,sys.argv[2])
-
-		
-		
 
 		print("*"*60)
 		print("Classification starting...")
@@ -340,12 +294,7 @@ if __name__ == "__main__":
 							accuracy_res = default_classification(X_merged, y, clfname, clf)
 						else:
 							print("Combine LDA features + features...")
-							if X_svd!=[]:
-								print("Not empty...")
-								X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
-							else:
-								X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
-								#X_merged_svd = X_vect
+							X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
 							accuracy_res = default_classification(X_merged_svd, y, clfname, clf)
 						
 					if k==10:
@@ -368,6 +317,8 @@ if __name__ == "__main__":
 						lda_results["Accuracy K=1000"][clfname] = accuracy_res
 		
 	if user_input==2:
+		print("LDA features + ex1 features")
 		dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_ex1_features.csv",combined_results)	
 	else:			
+		print("LDA features only")
 		dcsv.export_to_csv_statistic("./export/EvaluationMetric_10fold_lda_only.csv",lda_results)
