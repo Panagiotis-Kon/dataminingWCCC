@@ -277,6 +277,7 @@ if __name__ == "__main__":
 					if clfname == "My Method":
 						print("Combine LDA features + features...")
 						X_merged = sparse.hstack((X_vect, X_lda), format='csr')
+						X_merged = sparse.csr_matrix(X_merged).todense()
 						accuracy_res = MyMethod_classifier(X_merged, y, clfname, clf)
 					else:
 						if clfname == "(Binomial)-Naive Bayes" or clfname == "(Multinomial)-Naive Bayes":
