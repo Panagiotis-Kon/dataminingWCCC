@@ -89,7 +89,7 @@ def Lancaster_stemmer(text):
 	stemmed = []
 	lancaster_stemmer = nltk.stem.lancaster.LancasterStemmer()
 	for item in text:
-		stemmed.append(stemmer.stem(item))
+		stemmed.append(lancaster_stemmer.stem(item))
 	return stemmed
 
 def MyMethod_classifier(x,y,clfname, classifier):
