@@ -183,10 +183,12 @@ def predict_category(X,y,file_name):
 	print("Exporting predicted category to csv")
 	dcsv.export_to_csv_categories("./export/testSet_categories.csv",out_dic)
 
-
-def merger(x): # Lambda like function
+# Lambda like function
+def merger(x): 
 	return x['Title']  + ' '+ x['Content']
 
+# Tokenize the corpus with the help of nltk
+# http://stackoverflow.com/questions/15547409/how-to-get-rid-of-punctuation-using-nltk-tokenizer
 def corpus_tokenizer(text):
 	tokens = []
 	tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
