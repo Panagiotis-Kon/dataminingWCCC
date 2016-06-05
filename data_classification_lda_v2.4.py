@@ -338,7 +338,11 @@ if __name__ == "__main__":
 							accuracy_res = default_classification(X_merged, y, clfname, clf)
 						else:
 							print("Combine LDA features + features...")
-							X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
+							if X_svd!=[]:
+								print("Not empty...")
+								X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
+							else:
+								X_merged_svd = sparse.hstack((X_vect, X_lda), format='csr')
 							accuracy_res = default_classification(X_merged_svd, y, clfname, clf)
 						
 					if k==10:
