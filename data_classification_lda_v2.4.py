@@ -248,9 +248,9 @@ if __name__ == "__main__":
 
 	#merge content with title, in order to make use of the title help
 	X=df[['Title','Content']]
-	#f=lambda x: x['Title']  + ' '+ x['Content']
-	
-	X=X.apply(merger, 1)
+	f=lambda x: x['Title']  + ' '+ x['Content']
+	X=X.apply(f, 1)
+	#X=X.apply(merger, 1)
 	le=preprocessing.LabelEncoder()
 	le.fit(df["Category"])
 	y=le.transform(df["Category"])
@@ -306,7 +306,7 @@ if __name__ == "__main__":
 			svd=TruncatedSVD(n_components=20, random_state=42)
 			X_vect=vectorizer.fit_transform(X)
 			X_vect=transformer.fit_transform(X_vect)
-			X_svd=svd.fit_transform(X_vect)
+			X_svd=sparse.csr_matrix(svd.fit_transform(X_vect))
 
 			
 			#X_both = sparse.hstack((X_vect, X_lda), format='csr')
@@ -342,7 +342,8 @@ if __name__ == "__main__":
 								print("Not empty...")
 								X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
 							else:
-								X_merged_svd = sparse.hstack((X_vect, X_lda), format='csr')
+								X_merged_svd = sparse.hstack((X_svd, X_lda), format='csr')
+								#X_merged_svd = X_vect
 							accuracy_res = default_classification(X_merged_svd, y, clfname, clf)
 						
 					if k==10:
