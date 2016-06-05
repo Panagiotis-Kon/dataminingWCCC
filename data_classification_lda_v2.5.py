@@ -113,17 +113,8 @@ def MyMethod_classifier(x,y,clfname, classifier):
 	print("Training %s" % clfname)
 	print
 	print(classifier)
-	# In the pipeline we dont use the lsi because it will shrink valuable information
-	# for the prediction. Moreover it's not so good to use it with
-	# the SGDClassifier, which tunes the loss parameter at modified_huber and makes
-	# it linear
-	pipeline = Pipeline([
-		('vect', vectorizer),
-		('tfidf', transformer),
-		('clf', classifier)
-	])
 	print("GridSearchCV validation...")
-	grid_search = GridSearchCV(pipeline, {}, cv=k_fold,n_jobs=-1)
+	grid_search = GridSearchCV(classifier, {}, cv=k_fold,n_jobs=-1)
 	grid_search.fit(x_train,y_train)
 	print
 
@@ -140,30 +131,26 @@ def MyMethod_classifier(x,y,clfname, classifier):
 # predict_category: trains the whole dataset and makes predictions for the categories
 # which are being exported to a csv file
 def predict_category(X,y,file_name):
-	print("Predict the category with Some Classifier...")
-	X_train = X
-	Y_train = y
 
+	print("Predict the category with Some Classifier...")
 	df_test = dcsv.import_from_csv(file_name)
 	X_test = df_test[['Id','Title','Content']]
-	X_test = X_test.apply(merger,1)
+	f=lambda x: x['Title']  + ' '+ x['Content']
+	X_test = X_test.apply(f,1)
+	X_train = Lancaster_stemmer(X);
+	Y_train = y
 
 
 	#vectorizer = CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
-	vectorizer = CountVectorizer(stop_words='english')
-	transformer = TfidfTransformer()
-	clf=MultinomialNB(alpha=naive_bayes_a)
-	#clf = SGDClassifier(loss='modified_huber',alpha=0.0001)
-
-	pipeline = Pipeline([
-		('vect', vectorizer),
-		('tfidf', transformer),
-		('clf', clf)
-	])
+	#vectorizer = CountVectorizer(stop_words='english')
+	#transformer = TfidfTransformer()
+	#clf=MultinomialNB(alpha=naive_bayes_a)
+	clf = SGDClassifier(loss='modified_huber',alpha=0.0001)
+	grid_search = GridSearchCV(clf, {}, cv=k_fold,n_jobs=-1)
 	#Simple Pipeline Fit
-	pipeline.fit(X_train,Y_train)
+	grid_search.fit(X_train,Y_train)
 	#Predict the train set
-	predicted=pipeline.predict(X_test)
+	predicted=grid_search.predict(X_test)
 	# create lists to append the id from the test set
 	# and the results from the prediction
 	ID = []
