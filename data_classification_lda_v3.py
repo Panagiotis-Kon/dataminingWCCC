@@ -152,14 +152,13 @@ def predict_category(X,y,k):
 	print("Predict the category with SGD Classifier...")
 	df_test = dcsv.import_from_csv(sys.argv[2])
 	X_test_id = df_test[['Id','Title','Content']]
-	X_test_id = X_test_id[0:10]
 	X_test = X_test_id
 	f=lambda x: x['Title']  + ' '+ x['Content']
 	X_test = X_test.apply(f,1)
 
 	
-	X_train = X[0:100]
-	Y_train = y[0:100]
+	X_train = X
+	Y_train = y
 	vectorizer = CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
 	transformer = TfidfTransformer()
 
