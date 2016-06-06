@@ -1,3 +1,0 @@
-Statistic Measure	k-Nearest Neighbor	SVM	(Binomial)-Naive Bayes	(Multinomial)-Naive Bayes	My Method	Random forest
-Accuracy K=10	0.896	0.886	0.788	0.877	0.903	0.901
-Accuracy K=100	0.933	0.898	0.883	0.923	0.938	0.945
