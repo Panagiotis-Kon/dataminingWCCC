@@ -116,7 +116,7 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 		X_vect,X_svd = Ex1_features(X)
 		x_merged = sparse.hstack((X_vect, X_lda), format='csr')
 		print("Vectorizer preprocessing finished...")
-		if k==100:
+		if k==1000:
 			predict_category(x_merged,y,k)
 	else:
 		x_merged = x_lda
