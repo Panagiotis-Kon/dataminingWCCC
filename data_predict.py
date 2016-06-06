@@ -1,11 +1,39 @@
+from sklearn.linear_model import SGDClassifier
+
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+from pandas import *
+from sklearn.decomposition import TruncatedSVD
+from sklearn import preprocessing
+from sklearn.pipeline import Pipeline
+from sklearn.grid_search import GridSearchCV
+from sklearn import metrics
+from sklearn.cross_validation import train_test_split
+from sklearn.metrics  import *
+
+from gensim import matutils
+from gensim.models.ldamodel import LdaModel
+from gensim import corpora, models, similarities
+
+import scipy.sparse as sparse
+import re
+import nltk
+import sys
+import string
+import pandas as pd
+import numpy as np
+from os import path
+import matplotlib.pyplot as plt
+
 import data_csv_functions as dcsv
+import data_feature_functions as dff
 
 # predict_category: trains the whole dataset and makes predictions for the categories
 # which are being exported to a csv file
-def predict_category(X,y,k):
+def predict_category(X,y,k,filename):
 
 	print("Predict the category with SGD Classifier...")
-	df_test = dcsv.import_from_csv(sys.argv[2])
+	df_test = dcsv.import_from_csv(filename)
 	X_test_id = df_test[['Id','Title','Content']]
 	X_test = X_test_id
 	f=lambda x: x['Title']  + ' '+ x['Content']
@@ -14,7 +42,7 @@ def predict_category(X,y,k):
 	
 	X_train = X
 	Y_train = y
-	vectorizer = CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
+	vectorizer = CountVectorizer(stop_words='english',tokenizer=dff.text_preprocessor)
 	transformer = TfidfTransformer()
 
 	clf = SGDClassifier(loss='modified_huber',alpha=0.0001)
@@ -23,13 +51,13 @@ def predict_category(X,y,k):
 	print("LDA features for the Train set")
 	print
 	#Convert docs to a list where elements are a tokens list
-	corpus_train = corpus_tokenizer(X_train)
+	corpus_train = dff.corpus_tokenizer(X_train)
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
 	dictionary_train = corpora.Dictionary(corpus_train)
 	#Create the Gen-Sim corpus using the vectorizer
 	corpus_train = [dictionary_train.doc2bow(text) for text in corpus_train]
 
-	x_train_lda = LDA_processing(corpus_train, dictionary_train, k)
+	x_train_lda = dff.LDA_processing(corpus_train, dictionary_train, k)
 
 	print("Transforms in Train set")
 	print
@@ -46,13 +74,13 @@ def predict_category(X,y,k):
 	print("LDA features for the Test set")
 	print
 	#Convert docs to a list where elements are a tokens list
-	corpus_test= corpus_tokenizer(X_test)
+	corpus_test= dff.corpus_tokenizer(X_test)
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
 	dictionary_test = corpora.Dictionary(corpus_test)
 	#Create the Gen-Sim corpus using the vectorizer
 	corpus_test = [dictionary_test.doc2bow(text) for text in corpus_test]
 
-	x_test_lda = LDA_processing(corpus_test, dictionary_test, k)
+	x_test_lda = dff.LDA_processing(corpus_test, dictionary_test, k)
 
 	print("Transforms in Test set")
 	print

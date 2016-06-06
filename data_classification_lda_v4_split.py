@@ -1,6 +1,9 @@
 from sklearn.linear_model import SGDClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import BernoulliNB,MultinomialNB
+from sklearn.svm import SVC
+
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from pandas import *
@@ -9,27 +12,26 @@ from sklearn import preprocessing
 from sklearn.pipeline import Pipeline
 from sklearn.grid_search import GridSearchCV
 from sklearn import metrics
-from sklearn.naive_bayes import BernoulliNB,MultinomialNB
-from sklearn.svm import SVC
 from sklearn.cross_validation import train_test_split
-import scipy.sparse as sparse
-import re
-import nltk
-
-import sys
-
 from sklearn.metrics  import *
 
 from gensim import matutils
 from gensim.models.ldamodel import LdaModel
 from gensim import corpora, models, similarities
 
+import scipy.sparse as sparse
+import re
+import nltk
+import sys
 import string
 import pandas as pd
 import numpy as np
 from os import path
 import matplotlib.pyplot as plt
+
 import data_csv_functions as dcsv
+import data_feature_functions as dff
+import data_predict as dp
 
 test_size=0.25
 k_fold=10
@@ -64,28 +66,6 @@ def default_classification(x,y,clfname,classifier):
 
 	return accuracy
 
-
-
-# stem_tokens is a help function for stemming the text
-def stem_tokens(tokens, stemmer):
-
-	stemmed = []
-	for item in tokens:
-		stemmed.append(stemmer.stem(item))
-	return stemmed
-
-#text_preprocessor will try to normalize the text. For doing so, it will
-# convert the text to lowwercases only and tokenize the text
-# at the end will stemm the words with lancaster stemmer
-# For the preprocessing we used the nltk package
-def text_preprocessor(text):
-
-	lowers = text.lower()
-	tokens = nltk.word_tokenize(lowers)
-	lancaster_stemmer = nltk.stem.lancaster.LancasterStemmer()
-	stemmed_words = stem_tokens(tokens, lancaster_stemmer)
-	return stemmed_words
-
 def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 	print('-' * 60)
 	print("My Method Classifier...")
@@ -94,17 +74,17 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 	print("LDA features for the My Method ")
 	print
 
-	vectorizer=CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
+	vectorizer=CountVectorizer(stop_words='english',tokenizer=dff.text_preprocessor)
 	transformer=TfidfTransformer()
 
 	#Convert docs to a list where elements are a tokens list
-	corpus_train = corpus_tokenizer(x)
+	corpus_train = dff.corpus_tokenizer(x)
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
 	dictionary_train = corpora.Dictionary(corpus_train)
 	#Create the Gen-Sim corpus using the vectorizer
 	corpus_train = [dictionary_train.doc2bow(text) for text in corpus_train]
 
-	x_train_lda = LDA_processing(corpus_train, dictionary_train, k)
+	x_train_lda = dff.LDA_processing(corpus_train, dictionary_train, k)
 
 	print("Transforms...\n")
 	x_train_vect=vectorizer.fit_transform(x)
@@ -138,21 +118,6 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 
 	return accuracy
 
-# Lambda like function
-def merger(x): 
-	return x['Title']  + ' '+ x['Content']
-
-# Tokenize the corpus with the help of nltk
-# http://stackoverflow.com/questions/15547409/how-to-get-rid-of-punctuation-using-nltk-tokenizer
-def corpus_tokenizer(text):
-	tokens = []
-	tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
-	for t in text:
-		lower = t.decode('utf-8').lower()
-		token = tokenizer.tokenize(lower)
-		tokens.append(token)
-	return tokens
-
 ################################################################################
 ###################### Here starts the main of the program #####################
 if __name__ == "__main__":
@@ -168,8 +133,18 @@ if __name__ == "__main__":
 	user_input = int(raw_input("Enter the number:  "))
 	while (user_input!=0) and (user_input!=1) and (user_input!=2) and (user_input!=3):
 		user_input = int(raw_input("Enter the number again:  "))
+
+	print
 	if (user_input==0):
+		print("Program exits...")
 		sys.exit()
+	elif (user_input==1):
+		print("LDA features selected...")
+	elif (user_input==2):
+		print("LDA features + ex1 features selected...")
+	else:
+		print("Category prediction selected...")
+	print("#"*60)
 
 	df=dcsv.import_from_csv(sys.argv[1])
 
@@ -183,7 +158,7 @@ if __name__ == "__main__":
 	y=le.transform(df["Category"])
 	
 	if user_input==3:
-		predict_category(X,y,100)
+		dp.predict_category(X,y,10,sys.argv[2])
 		print("*"*60)
 		print
 		print("Program Exits....")
@@ -193,7 +168,7 @@ if __name__ == "__main__":
 
 	
 	#Convert docs to a list where elements are a tokens list
-	corpus = corpus_tokenizer(X)
+	corpus = dff.corpus_tokenizer(X)
 	#Create Gen-Sim dictionary (Similar to SKLearn vectorizer)
 	dictionary = corpora.Dictionary(corpus)
 	#Create the Gen-Sim corpus using the vectorizer
@@ -213,16 +188,16 @@ if __name__ == "__main__":
 			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
 
 	
-	K=[10,50,100]
+	K=[10,100,1000]
 	for k in K:
 		print("LDA Modeling starting...")
 		print("   Number of Topics: %d \n" % k)
 		
 
-		X_lda = LDA_processing(corpus, dictionary, k)
+		X_lda = dff.LDA_processing(corpus, dictionary, k)
 
 		if user_input==2:
-			X_vect,X_svd = Ex1_features(X)
+			X_vect,X_svd = dff.Ex1_features(X)
 			print("Vectorizer preprocessing finished...")
 			
 		print("*"*60)
