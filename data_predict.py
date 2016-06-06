@@ -32,7 +32,7 @@ k_fold=10
 
 # predict_category: trains the whole dataset and makes predictions for the categories
 # which are being exported to a csv file
-def predict_category(X,y,k,filename):
+def predict_category(X,y,k,le,filename):
 
 	print("Predict the category with SGD Classifier...")
 	df_test = dcsv.import_from_csv(filename)

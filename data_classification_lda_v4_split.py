@@ -159,7 +159,7 @@ if __name__ == "__main__":
 	y=le.transform(df["Category"])
 	
 	if user_input==3:
-		dp.predict_category(X,y,10,sys.argv[2])
+		dp.predict_category(X,y,10,le,sys.argv[2])
 		print("*"*60)
 		print
 		print("Program Exits....")
