@@ -114,7 +114,7 @@ def beat_the_benchmark(X,y,clfname,classifier):
 	print("Beating the Benchmark...")
 	print
 	print("Preprocessing...")
-
+	print(X)
 	# split the train set (75 - 25) in order to have a small test set to check the classifiers
 	X_train, X_test, y_train, y_test = train_test_split(
 		X, y, test_size=test_size, random_state=0)
