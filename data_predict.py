@@ -28,6 +28,8 @@ import matplotlib.pyplot as plt
 import data_csv_functions as dcsv
 import data_feature_functions as dff
 
+k_fold=10
+
 # predict_category: trains the whole dataset and makes predictions for the categories
 # which are being exported to a csv file
 def predict_category(X,y,k,filename):
