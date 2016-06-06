@@ -144,6 +144,7 @@ if __name__ == "__main__":
 		print("LDA features + ex1 features selected...")
 	else:
 		print("Category prediction selected...")
+	print
 	print("#"*60)
 
 	df=dcsv.import_from_csv(sys.argv[1])
