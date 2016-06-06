@@ -102,7 +102,7 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 	print
 
 	vectorizer=CountVectorizer(stop_words='english',tokenizer=text_preprocessor)
-    transformer=TfidfTransformer()
+	transformer=TfidfTransformer()
 
 	#Convert docs to a list where elements are a tokens list
 	corpus_train = corpus_tokenizer(x)
