@@ -31,7 +31,7 @@ from os import path
 import matplotlib.pyplot as plt
 import data_csv_functions as dcsv
 
-test_size=0.28
+test_size=0.25
 k_fold=10
 k_neighbors_num=9
 naive_bayes_a=0.05
