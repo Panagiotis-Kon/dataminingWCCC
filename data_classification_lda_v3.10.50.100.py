@@ -288,7 +288,7 @@ if __name__ == "__main__":
 	print("3: Category prediction")
 	print("0: exit")
 	user_input = int(raw_input("Enter the number:  "))
-	while (user_input!=0) and (user_input!=1) and (user_input!=2):
+	while (user_input!=0) and (user_input!=1) and (user_input!=2) and (user_input!=3):
 		user_input = int(raw_input("Enter the number again:  "))
 	if (user_input==0):
 		sys.exit()
