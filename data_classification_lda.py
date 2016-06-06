@@ -166,7 +166,7 @@ if __name__ == "__main__":
 	
 	# if the user wants to make a prediction test
 	if user_input==3:
-		dp.predict_category(X,y,10,le,sys.argv[2])
+		dp.predict_category(X,y,1000,le,sys.argv[2])
 		print("*"*60)
 		print
 		print("Program Exits....")
@@ -198,7 +198,7 @@ if __name__ == "__main__":
 			(SGDClassifier(loss='modified_huber',alpha=0.0001), "My Method")]
 
 	# Starting the main loop for the topics #
-	K=[10]
+	K=[10,50,100,1000]
 	for k in K:
 		print("LDA Modeling starting...")
 		print("   Number of Topics: %d \n" % k)
