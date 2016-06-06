@@ -113,8 +113,8 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 
 	x_train_lda = LDA_processing(corpus_train, dictionary_train, k)
 
-    print("Transforms...\n")
-    x_train_vect=vectorizer.fit_transform(x)
+	print("Transforms...\n")
+	x_train_vect=vectorizer.fit_transform(x)
 	x_train_tfidf=transformer.fit_transform(x_train_vect)
 
 	x_merged = None
