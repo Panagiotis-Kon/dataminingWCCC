@@ -119,7 +119,7 @@ def MyMethod_classifier(x,y,clfname, classifier, user_input, k):
 
 	x_merged = None
 	if user_input == 2:
-		x_merged = sparse.hstack((x_train_tfidf, X_train_lda), format='csr')
+		x_merged = sparse.hstack((x_train_tfidf, x_train_lda), format='csr')
 		print("Merging of features finished")
 		
 	else:
