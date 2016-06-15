@@ -114,7 +114,6 @@ def beat_the_benchmark(X,y,clfname,classifier):
 	print("Beating the Benchmark...")
 	print
 	print("Preprocessing...")
-	print(X)
 	# split the train set (75 - 25) in order to have a small test set to check the classifiers
 	X_train, X_test, y_train, y_test = train_test_split(
 		X, y, test_size=test_size, random_state=0)
@@ -151,17 +150,21 @@ def beat_the_benchmark(X,y,clfname,classifier):
 
 # predict_category: trains the whole dataset and makes predictions for the categories
 # which are being exported to a csv file
-def predict_category(X,y,file_name):
-	print("Predict the category with (Multinomial)-Naive Bayes Classifier...")
+def predict_category(X,y,filename):
+
+	df_test = dcsv.import_from_csv(filename)
+	X_test_id = df_test[['Id','Title','Content']]
+	X_test = X_test_id
+	f=lambda x: x['Title']  + ' '+ x['Content']
+	X_test = X_test.apply(f,1)
+
+	
 	X_train = X
 	Y_train = y
+	vectorizer = CountVectorizer(stop_words='english')
+	transformer = TfidfTransformer()
 
-	df_test = dcsv.import_from_csv(file_name)
-	X_true_id = df["Id"]
-
-	vectorizer=CountVectorizer(stop_words='english')
-	transformer=TfidfTransformer()
-	clf=MultinomialNB(alpha=naive_bayes_a)
+	clf = MultinomialNB(alpha=naive_bayes_a)
 
 
 	pipeline = Pipeline([
@@ -172,13 +175,16 @@ def predict_category(X,y,file_name):
 	#Simple Pipeline Fit
 	pipeline.fit(X_train,Y_train)
 	#Predict the train set
-	predicted=pipeline.predict(X_train)
+	predicted=pipeline.predict(X_test)
+
 	# create lists to append the id from the test set
 	# and the results from the prediction
 	ID = []
 	category = []
-	for i in X_true_id:
-		ID.append(i)
+	
+	for row in X_test_id.iterrows():
+		index,data = row
+		ID.append(data['Id'])
 	id_dic = {'ID' : ID}
 
 	for pred in predicted:
