@@ -1,6 +1,6 @@
 # <a name="team-members"></a>Team Members
-* "Panagiotis Kontopoulos" <admin1@admin.com>
-* "Alexadros-Panagiotis Tsakrilis" <admin2@admin.com>
+* "Panagiotis Kon" <admin1@admin.com>
+* "alextsak"
 
 # <a name="ubuntu"></a>Ubuntu Installation
 
