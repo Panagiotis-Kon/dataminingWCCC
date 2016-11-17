@@ -1,3 +1,5 @@
+# <a name="name"></a>WordCloud, Clustering and Classification
+
 # <a name="team-members"></a>Team Members
 * "Panagiotis Kon"
 * "alextsak"
